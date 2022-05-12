@@ -1,0 +1,48 @@
+textarea {
+  resize: none;
+}
+
+div {
+  margin: 0;
+}
+
+#output {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+}
+#output > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: lightblue;
+}
+#output > div > div {
+  padding: 20px;
+}
+
+form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+form fieldset {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+form fieldset input {
+  display: inline;
+  margin-bottom: 10px;
+}

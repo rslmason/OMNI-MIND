@@ -1,0 +1,36 @@
+// @import "setup";
+
+textarea {
+    resize: none;
+}
+
+div {
+    
+    margin: 0;
+}
+
+#output 
+    {
+    display: flex;
+    flex-direction: column-reverse;
+    > div {
+        display: flex;
+        background-color: lightblue;
+        > div {
+            padding: 20px;
+        }
+    }
+}
+
+form {
+    display: flex;
+    fieldset {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        input {
+            display: inline;
+            margin-bottom: 10px;
+        }
+    }
+}
