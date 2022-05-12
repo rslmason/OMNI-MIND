@@ -1,4 +1,4 @@
-const myApiKey = process.env.OPENAI_API_KEY;
+const myApiKey = process.env;
 
 exports.handler = async (event, context) => {
     console.log(myApiKey);
