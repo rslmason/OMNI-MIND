@@ -6,7 +6,7 @@ let apiKey;
 
 fetch(".netlify/functions/api")
 .then(response => response.body)
-.then(json => apiKey = json.api);
+.then(body => apiKey = body.api);
 
 
 console.log(apiKey)
