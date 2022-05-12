@@ -2,13 +2,13 @@ document.getElementById('myButton').disabled = true; // If you just disable this
 
 // const apiKey = fetch('netlify/functions/getEnvVar');
 
-let apiKey;
+// let apiKey;
 
-fetch(".netlify/functions/api")
-.then(response => response.json())
-.then(jason => console.log(jason.myKey));
+// fetch(".netlify/functions/api")
+// .then(response => response.json())
+// .then(jason => console.log(jason.myKey));
 
-// console.log(apiKey)
+console.log(apiKey)
 
 // for (i of document.getElementsByTagName('input')) {
 //     i.addEventListener('change',(event)=>{
