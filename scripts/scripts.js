@@ -6,9 +6,9 @@ let apiKey;
 
 fetch(".netlify/functions/api")
 .then(response => response.json())
-.then(jason => apiKey = jason.myKey);
+.then(jason => console.log(jason));
 
-console.log(apiKey)
+// console.log(apiKey)
 
 // for (i of document.getElementsByTagName('input')) {
 //     i.addEventListener('change',(event)=>{
