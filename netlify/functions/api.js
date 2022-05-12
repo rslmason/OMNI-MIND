@@ -1,6 +1,8 @@
+const myKey = process.env.OPENAI_API_KEY;
+
 exports.handler = async (event, context) => {
-    const { OPENAI_API_KEY } = process.env;
-    console.log(OPENAI_API_KEY);
+    
+    console.log(myKey);
     return {
         statusCode: 200,
         body: JSON.stringify({
