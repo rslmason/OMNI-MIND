@@ -10,25 +10,27 @@ fetch(".netlify/functions/api")
     apiKey = json.api;
 })
 
-for (i of document.getElementsByTagName('input')) {
-    i.addEventListener('change',(event)=>{
-        const target = event.target;
-        if (target.value === "" || parseFloat(target.value) < target.min) {
-            target.value = target.min;
-        }
-        else if (parseFloat(target.value) > target.max) {
-            console.log('that');
-            target.value = target.max;
-        }
-    })
-    if (i.step == '1') {
-        i.addEventListener('change', (event) => {
-            const target = event.target;
-            target.value = parseInt(target.value);
+console.log(apiKey)
 
-        })
-    }
-}
+// for (i of document.getElementsByTagName('input')) {
+//     i.addEventListener('change',(event)=>{
+//         const target = event.target;
+//         if (target.value === "" || parseFloat(target.value) < target.min) {
+//             target.value = target.min;
+//         }
+//         else if (parseFloat(target.value) > target.max) {
+//             console.log('that');
+//             target.value = target.max;
+//         }
+//     })
+//     if (i.step == '1') {
+//         i.addEventListener('change', (event) => {
+//             const target = event.target;
+//             target.value = parseInt(target.value);
+
+//         })
+//     }
+// }
 
 let output = document.getElementById('output');
 
@@ -71,34 +73,34 @@ let engineSelect = document.getElementById('engine');
 const requireStrings = ['text'];
 const excludeStrings = ['search','code','similarity','edit','insert'];
 
-getEngines().then(r => {
-    r.data.forEach(i => {
-        const name = i.id;
-        if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
-            const option = document.createElement("option");
-            option.value = i.id;
-            option.text = i.id;
-            engineSelect.appendChild(option);
-        }
-    });
-    document.getElementById('myButton').disabled = false;
-    }
-)
+// getEngines().then(r => {
+//     r.data.forEach(i => {
+//         const name = i.id;
+//         if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
+//             const option = document.createElement("option");
+//             option.value = i.id;
+//             option.text = i.id;
+//             engineSelect.appendChild(option);
+//         }
+//     });
+//     document.getElementById('myButton').disabled = false;
+//     }
+// )
 
-async function postPrompt(data, engine = 'text-curie-001') {
-    const response = await fetch(`https://api.openai.com/v1/engines/${engine}/completions`,
-        {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                //Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-                Authorization: `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify(data),
-        }
-    );
-    return response.json();
-}
+// async function postPrompt(data, engine = 'text-curie-001') {
+//     const response = await fetch(`https://api.openai.com/v1/engines/${engine}/completions`,
+//         {
+//             method: 'POST',
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 //Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+//                 Authorization: `Bearer ${apiKey}`,
+//             },
+//             body: JSON.stringify(data),
+//         }
+//     );
+//     return response.json();
+// }
 
 
 document.getElementById('myButton').addEventListener('click', (event)=>{
