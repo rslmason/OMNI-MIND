@@ -5,10 +5,9 @@ document.getElementById('myButton').disabled = true; // If you just disable this
 let apiKey;
 
 fetch(".netlify/functions/api")
-.then(response => response.json())
-.then(json => {
-    apiKey = json.api;
-})
+.then(response => response.body)
+.then(json => apiKey = json.api);
+
 
 console.log(apiKey)
 
