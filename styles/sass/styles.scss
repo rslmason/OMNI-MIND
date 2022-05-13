@@ -1,36 +1,322 @@
-// @import "setup";
+@import "partials/setup";
 
-textarea {
-    resize: none;
+$lightFontColor: rgb(204, 255, 103);
+$highlightFontColor: rgb(230, 255, 181);
+$darkFontColor: rgb(1, 107, 1);
+$darkFontColorTranspart: rgba(0, 128, 0, 0.5);
+
+
+@mixin normalText {
+    color: $lightFontColor;
+    text-shadow: 1px 0px $darkFontColor, -1px 0px $darkFontColor;
 }
 
+@mixin highlightText {
+    color: $highlightFontColor;
+    text-shadow: 1px 0px $lightFontColor, -1px 0px $lightFontColor;
+}
+
+@mixin normalBorder {
+    outline: 1px $darkFontColor solid;
+    border: 1px  $lightFontColor solid;
+}
+
+
+@mixin highlightBorder {
+    outline: 1px $lightFontColor solid;
+    border: 1px  $highlightFontColor solid;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+.wait {
+    cursor: progress;
+    color: $darkFontColor;
+}
+
+body {
+    background-color: black;
+    main {
+        background-color: inherit;
+        form {
+            background-color: inherit;
+            fieldset {
+                background-color: inherit;
+                div {
+                    background-color: black;   
+                    z-index: 1;                 
+                }
+            }
+        }
+    }
+}
+
+body, input, select, legend, button, textarea, div, label {
+    // background-color: black;
+    font-size: 1.8rem;
+    letter-spacing: .2rem;
+    @include normalText;
+    color: $lightFontColor;
+    font-family: Courier, monospace;
+}
+
+input, select, legend, button, textarea {
+    background-color: inherit;
+}
+
+button {
+    @include normalBorder;
+    // border-radius: 4%;
+    border-radius: .3rem;
+}
+
+button:disabled {
+    color: $darkFontColor;
+    &:hover {
+        @include normalBorder;
+        @include normalText;
+    }
+}
+
+button:hover, input:hover, input:focus, textarea:focus {
+    @include highlightText;
+    @include highlightBorder;
+}
+
+::selection {
+    color: black;
+    background-color: $lightFontColor;
+}
+
+
+.deleteButton, #optionButton {
+    border: none;
+    padding: .5rem;
+    // color: inherit;
+    @include normalText;
+    outline: none;
+    &:hover {
+        border: none;
+        outline: none;
+        @include highlightText();
+    }
+
+}
+
+
+.deleteButton {
+    top: 0px;
+    right: 0px;
+    position: absolute;
+
+}
+
+#optionButton {
+    padding: 0;
+    font-size: inherit;
+}
+
+.mask {
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,1) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+textarea {
+    position: relative;
+    padding: 2rem;
+    resize: none;
+    width: 100%;
+    color: inherit;
+    // caret-color: $darkFontColoryellow;
+    font-family: inherit;
+    // box-shadow: 2px 2px 0 0 $darkFontColor;
+    height: 100%;
+    // border-radius: 1%;
+    border-radius: .3rem;
+    letter-spacing: .1rem;
+    @include normalBorder;   
+}
+
+
+
+option {
+    white-space: pre;
+}
+
+
 div {
-    
     margin: 0;
 }
 
+
+
+.wrapper {
+    width: 90%;
+    max-width: 75rem;
+    margin: auto;
+}
+
+h1, label, input, select, button, form, legend {
+    text-transform: uppercase;
+}
+
+h1 {
+    font-weight: inherit;
+}
 #output 
     {
     display: flex;
     flex-direction: column-reverse;
+    white-space: pre-line;
+    margin-bottom: 4rem;
     > div {
+        position: relative;
         display: flex;
-        background-color: lightblue;
+        @include normalBorder;
+        border-radius: .4rem;
+        margin-top: 3rem;
         > div {
-            padding: 20px;
+            padding: 2rem;
+            &:nth-of-type(2) {
+                // text-align: right;
+                min-width: 25rem;
+            }
         }
     }
 }
 
+legend {
+    text-shadow: inherit;
+    font-size: 2.2rem;
+}
+
+
 form {
     display: flex;
+    justify-content: space-between;
     fieldset {
+        position: relative;
+        border: none;
+        legend {
+            margin-bottom: 1rem;
+            text-decoration: underline;
+        }
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+
+        margin: 0;
+        padding: 0;
+        &.prompt {
+            width: calc(66% - 1rem);
+            justify-content: space-between;
+            position: relative;
+            div {
+                margin-top: 2rem;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+        &.options {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            width: 33%;
+            min-width: 25rem;
+            legend {
+                width: 100%;
+                text-align: right;
+            }
+
+        }
+        label, input, select {
+            text-align: right;
+        }
         input {
-            display: inline;
-            margin-bottom: 10px;
+            width: 7rem;
+            padding: .5rem;
+
+            border-radius: 5%;
+        }
+        input, select {
+            margin-bottom: 1rem;
+            background-color: inherit;
+            color: inherit;
+            font-family: inherit;
+            @include normalBorder;
+            border-radius: .3rem;
+
+        }
+        input:last-child {
+            margin-bottom: 0;
+        }
+        select {
+            width: 24rem;
         }
     }
+}
+
+
+
+#optionPanel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200%;
+    padding: 2rem;
+    border-radius: .2rem;
+    @include highlightBorder;
+    p {
+        &:first-of-type {
+            margin-top: 0;
+        }
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+    visibility: hidden;
+    &.show {
+        visibility: visible;
+    }
+}
+
+label {
+    position: relative;
+    &:hover{
+        div {
+            visibility: visible
+        }
+    }
+    div {
+        background-color: lightblue;
+        padding: 10px;
+        left: 100%;
+        bottom: 100%;
+        position: absolute;
+        visibility: hidden;
+    }
+}
+
+// from w3schools
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+textarea {
+    &::-webkit-scrollbar{
+        display: none;
+    }
+    scrollbar-width: none;
 }

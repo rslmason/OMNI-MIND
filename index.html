@@ -8,34 +8,49 @@
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <main>
-        <h1>Fun with AI</h1>
+    <!-- <div class="mask"></div> -->
+    <main class="wrapper">
+        <h1>Omni-Mind</h1>
         <form id="form" action="">
-            <fieldset>
-                <legend>Enter Prompt</legend>
-                <label for="prompt"></label>
-                <textarea name="prompt" id="prompt" cols="30" rows="10"></textarea>
-                <button id="myButton">Submit Prompt</button>
+            <fieldset class="prompt">
+                <legend>Prompt</legend>
+                <label for="prompt" class="sr-only">Prompt</label>
+                <textarea name="prompt" id="prompt" spellcheck="false"></textarea>
+                <!-- <p>▋</p> -->
+                <div>
+                    <button id="myButton">Submit Prompt</button>
+                    <button id="suggestButton">Suggest Prompt</button>
+                </div>
             </fieldset>
-            <fieldset>
-                <legend>Options</legend>
-                <label for="temperature">Temperature (between 0.0 and 1.0):</label>
-                <input type="number" id="temperature" name="temperature" value="1" step="0.1" min="0" max="1">
-
-                <label for="max_tokens">Maximum Tokens (between 0 and 2048):</label>
-                <input type="number" id="max_tokens" name="max_tokens" value="1024" step="1" min="0" max="2048">
-
-                <label for="top_p">Top P (between 0.0 and 1.0):</label>
-                <input type="number" id="top_p" name="top_p" value="1" step="0.1" min="0" max="1">
-
-                <label for="frequency_penalty">Frequency Penalty (between -2.0 and 2.0):</label>
-                <input type="number" id="frequency_penalty" name="frequency_penalty" value="0" step="0.1" min="-2" max="2">
-
-                <label for="presence_penalty">Presence Penalty (between -2.0 and 2.0):</label>
-                <input type="number" id="presence_penalty" name="presence_penalty" value="0" step="0.1" min="-2" max="2">
-
+            <fieldset class="options">
+                <legend>Options<button id="optionButton">[?]</button></legend>
+                
                 <label for="engine">Select engine:</label>
                 <select name="engine" id="engine"></select>
+                
+                <label for="temperature">temperature:<br>(0.0 to 1.0)</label>
+                <input type="number" id="temperature" name="temperature" value="1" step="0.1" min="0" max="1">
+
+                <label for="max_tokens">max_tokens:<br>(1 to 2048)</label>
+                <input type="number" id="max_tokens" name="max_tokens" value="1024" step="1" min="1" max="2048">
+
+                <label for="top_p">top_p:<br>(0.0 to 1.0)</label>
+                <input type="number" id="top_p" name="top_p" value="1" step="0.1" min="0" max="1">
+
+                <label for="frequency_penalty">frequency_penalty:<br>(-2.0 to 2.0)</label>
+                <input type="number" id="frequency_penalty" name="frequency_penalty" value="0" step="0.1" min="-2" max="2">
+
+                <label for="presence_penalty">presence_penalty:<br>(-2.0 to 2.0)</label>
+                <input type="number" id="presence_penalty" name="presence_penalty" value="0" step="0.1" min="-2" max="2">
+
+                <div id="optionPanel">
+                    <button class="deleteButton">X</button>
+                    <p>A higher temperature will return more creative results, while a lower value will return a more definite answer.</p>
+                    <p>The responses are composed out of tokens, which are common sequences of characters. A token is often one word, but it might be a part of a word or a punctuation mark. The maximum tokens are shared between the prompt and the response.</p>
+                    <p>The value of top_p determines how likely a given token must be in order to be considered. A top_p of 0.5 means that only the 50% most likely tokens are considered, while a value of 0.1 means that the 10% most likely are considered</p>
+                    <p>frequency_penalty</p>
+                    <p>presence_penalty</p>
+                </div>
             </fieldset>
         </form>
         <div id="output"></div>
