@@ -49,6 +49,7 @@ for (input of document.getElementsByTagName('input')) {
 
 document.getElementById('optionButton').addEventListener ('click', ()=>{
     document.getElementById('optionPanel').classList.toggle('show');
+    document.getElementById('mask').classList.toggle('show');
 })
 
 const dataPrototype = {
@@ -87,27 +88,30 @@ let engineSelect = document.getElementById('engine');
 const requireStrings = ['text'];
 const excludeStrings = ['search','code','similarity','edit','insert'];
 
-document.querySelector('.deleteButton').addEventListener('click', (event)=> event.target.parentElement.classList.toggle('show'));
+document.querySelector('.deleteButton').addEventListener('click', (event)=> {
+    event.target.parentElement.classList.remove('show');
+    document.getElementById('mask').classList.remove('show');
+});
 
-// getEngines().then(r => {
-//     let j = 0;
-//     r.data.forEach(i => {
-//         const name = i.id;
-//         if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
-//             const option = document.createElement("option");
-//             option.value = i.id;
-//             option.text = `${j++}. ${i.id.toUpperCase()}`;
-//             engineSelect.appendChild(option);
-//         }
-//     });
-//     document.getElementById('myButton').disabled = false;
-//     }
-// )
-const option = document.createElement("option");
-option.value = 'text-curie-001';
-option.text = 'text-curie-001';
-engineSelect.appendChild(option);
-document.getElementById('myButton').disabled = false;
+getEngines().then(r => {
+    let j = 1;
+    r.data.forEach(i => {
+        const name = i.id;
+        if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
+            const option = document.createElement("option");
+            option.value = i.id;
+            option.text = `${j++}. ${i.id.toUpperCase()}`;
+            engineSelect.appendChild(option);
+        }
+    });
+    document.getElementById('myButton').disabled = false;
+    }
+)
+// const option = document.createElement("option");
+// option.value = 'text-curie-001';
+// option.text = 'text-curie-001';
+// engineSelect.appendChild(option);
+// document.getElementById('myButton').disabled = false;
 
 const textArea = document.querySelector('textarea');
 
@@ -117,7 +121,6 @@ async function postPrompt(data, engine = 'text-curie-001') {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-                //Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
                 Authorization: `Bearer ${apiKey}`,
             },
             body: JSON.stringify(data),
@@ -125,8 +128,6 @@ async function postPrompt(data, engine = 'text-curie-001') {
     );
     return response.json();
 }
-
-// document.querySelector('form').addEventListener('submit', event => {event.preventDefault(); console.log(event, "a")});
 
 document.querySelectorAll('input').forEach(el=> el.addEventListener('keypress', (event)=>{
     console.log(event.key);
@@ -138,7 +139,6 @@ document.querySelectorAll('input').forEach(el=> el.addEventListener('keypress', 
 document.querySelectorAll('form button').forEach(el=> el.addEventListener('click', (event)=>{
     event.preventDefault();
 }));
-
 
 document.getElementById('myButton').addEventListener('click', (event)=>{
     const data = gatherData();
@@ -174,7 +174,6 @@ function userSubmitPrompt (data, engine, sourceElement) {
 
 function updateCookie() {
     let cookieString = `${cookieName}=${JSON.stringify(cookieArray)}; SameSite=None; Secure`;
-    // if cookieString.getBytes
     document.cookie = cookieString;
 }
 

@@ -244,7 +244,6 @@ body main form fieldset {
 }
 body main form fieldset div {
   background-color: black;
-  z-index: 1;
 }
 
 body, input, select, legend, button, textarea, div, label {
@@ -318,12 +317,16 @@ button:hover, input:hover, input:focus, textarea:focus {
   font-size: inherit;
 }
 
-.mask {
+#mask {
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 40%, rgba(0, 0, 0, 0.9) 60%, rgb(0, 0, 0) 100%);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
   pointer-events: none;
+  visibility: hidden;
+}
+#mask.show {
+  visibility: visible;
 }
 
 textarea {
@@ -452,6 +455,8 @@ form fieldset.options {
 form fieldset.options legend {
   width: 100%;
   text-align: right;
+  position: relative;
+  z-index: 2;
 }
 form fieldset label, form fieldset input, form fieldset select {
   text-align: right;
@@ -470,7 +475,7 @@ form fieldset input, form fieldset select {
   border: 1px rgb(204, 255, 103) solid;
   border-radius: 0.3rem;
 }
-form fieldset input:last-child {
+form fieldset input:last-of-type {
   margin-bottom: 0;
 }
 form fieldset select {
@@ -486,6 +491,7 @@ form fieldset select {
   border-radius: 0.2rem;
   outline: 1px rgb(204, 255, 103) solid;
   border: 1px rgb(230, 255, 181) solid;
+  z-index: 2;
   visibility: hidden;
 }
 #optionPanel p:first-of-type {

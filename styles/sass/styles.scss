@@ -46,7 +46,6 @@ body {
                 background-color: inherit;
                 div {
                     background-color: black;   
-                    z-index: 1;                 
                 }
             }
         }
@@ -67,6 +66,7 @@ input, select, legend, button, textarea {
 }
 
 button {
+    // position: relative;
     @include normalBorder;
     // border-radius: 4%;
     border-radius: .3rem;
@@ -118,12 +118,16 @@ button:hover, input:hover, input:focus, textarea:focus {
     font-size: inherit;
 }
 
-.mask {
+#mask {
     position: fixed;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 40%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,1) 100%);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
     pointer-events: none;
+    visibility: hidden;
+    &.show {
+        visibility: visible;
+    }
 }
 
 textarea {
@@ -220,6 +224,7 @@ form {
                 display: flex;
                 justify-content: space-between;
             }
+            
         }
         &.options {
             display: flex;
@@ -230,6 +235,8 @@ form {
             legend {
                 width: 100%;
                 text-align: right;
+                position: relative;
+                z-index: 2;
             }
 
         }
@@ -251,7 +258,7 @@ form {
             border-radius: .3rem;
 
         }
-        input:last-child {
+        input:last-of-type {
             margin-bottom: 0;
         }
         select {
@@ -270,6 +277,7 @@ form {
     padding: 2rem;
     border-radius: .2rem;
     @include highlightBorder;
+    z-index: 2;
     p {
         &:first-of-type {
             margin-top: 0;
