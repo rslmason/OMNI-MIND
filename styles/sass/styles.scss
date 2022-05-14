@@ -366,27 +366,25 @@ textarea {
     form {
         fieldset {
             label, input, select {
-            width: calc(50% - 1rem);
+            width: 100%;
+            &.show {
+                visibility: visible;
+                position: relative
+            }
+            label {
+                height: 4.4rem;
+            }
+            visibility: hidden;
+            position: absolute;
         }
     }}  
     button {
         padding: 1rem;
         margin-bottom: 1rem;
     }
-    input:nth-of-type(2) {
-        break-after: always;
-        margin-bottom: 0;
-    }
     label {
         height: 4.4rem;
-    }
-    label, input, select {
-        &.show {
-            visibility: visible;
-            position: relative
-        }
-        visibility: hidden;
-        position: absolute;
+        text-align: left;
     }
     #output {
         div {

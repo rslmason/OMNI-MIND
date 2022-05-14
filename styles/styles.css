@@ -579,7 +579,16 @@ textarea::-webkit-scrollbar {
   }
 
   form fieldset label, form fieldset input, form fieldset select {
-    width: calc(50% - 1rem);
+    width: 100%;
+    visibility: hidden;
+    position: absolute;
+  }
+  form fieldset label.show, form fieldset input.show, form fieldset select.show {
+    visibility: visible;
+    position: relative;
+  }
+  form fieldset label label, form fieldset input label, form fieldset select label {
+    height: 4.4rem;
   }
 
   button {
@@ -587,24 +596,9 @@ textarea::-webkit-scrollbar {
     margin-bottom: 1rem;
   }
 
-  input:nth-of-type(2) {
-    -webkit-column-break-after: always;
-       -moz-column-break-after: always;
-            break-after: always;
-    margin-bottom: 0;
-  }
-
   label {
     height: 4.4rem;
-  }
-
-  label, input, select {
-    visibility: hidden;
-    position: absolute;
-  }
-  label.show, input.show, select.show {
-    visibility: visible;
-    position: relative;
+    text-align: left;
   }
 
   #output div {
