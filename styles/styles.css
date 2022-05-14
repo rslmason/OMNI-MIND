@@ -346,6 +346,10 @@ div {
   margin: 0;
 }
 
+p {
+  overflow-wrap: break-word;
+}
+
 .wrapper {
   width: 90%;
   max-width: 75rem;

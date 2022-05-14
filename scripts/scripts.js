@@ -31,11 +31,11 @@ function deobfuscator (strOne, strTwo) {
 }
 for (input of document.getElementsByTagName('input')) {
     input.addEventListener('change',(event)=>{
-        const target = event.target;
-        if (target.value === "" || parseFloat(target.value) < target.min) {
-            target.value = 0 && target.min;
+        target = event.target;
+        if (target.value == "" || (parseFloat(target.value) < parseFloat(target.min))) {
+            target.value = parseFloat(target.min);
         }
-        else if (parseFloat(target.value) > target.max) {
+        else if (parseFloat(target.value) > parseFloat(target.max)) {
             target.value = target.max;
         }
     })
@@ -70,6 +70,14 @@ function toggleShowElements (...args) {
 
 
 document.getElementById('optionsCollapseButton').addEventListener('click', toggleShowElements(...document.querySelectorAll('.options label, .options select, .options input')))
+document.getElementById('optionsCollapseButton').addEventListener('click', (event)=>{
+    if (event.target.textContent == "▼") {
+        event.target.textContent = "▲";
+    }
+    else {
+        event.target.textContent = "▼";
+    }
+})
 
 const dataPrototype = {
     prompt: 'Write a poem about a dog wearing skis',
@@ -85,9 +93,9 @@ Object.defineProperty(dataPrototype, 'parsingFunction',{
         prompt: x => x,
         temperature: parseFloat,
         max_tokens: parseInt,
-        top_p: parseInt,
-        frequency_penalty: parseInt,
-        presence_penalty: parseInt,
+        top_p: parseFloat,
+        frequency_penalty: parseFloat,
+        presence_penalty: parseFloat,
     },
     enumerable: false,
 })
@@ -135,6 +143,7 @@ getEngines().then(r => {
 const textArea = document.querySelector('textarea');
 
 async function postPrompt(data, engine = 'text-curie-001') {
+    delete data.parsingFunction;
     const response = await fetch(`https://api.openai.com/v1/engines/${engine}/completions`,
         {
             method: 'POST',
@@ -149,13 +158,12 @@ async function postPrompt(data, engine = 'text-curie-001') {
 }
 
 document.querySelectorAll('input').forEach(el=> el.addEventListener('keydown', (event)=>{
-    if (!event.key.match(/[0-9\.]/g) && (!event.key.startsWith('Arrow') && (!event.key.startsWith('Backs') && !event.key.startsWith('Del')))) {
+    if (!event.key.match(/[0-9\.\-]/g) && (!event.key.startsWith('Arrow') && (!event.key.startsWith('Backs') && !event.key.startsWith('Del')))) {
         event.preventDefault()
     }
 }));
 
 document.querySelectorAll('form button').forEach(el=> el.addEventListener('click', (event)=>{
-    console.log(event.key);
     event.preventDefault();
 }));
 
@@ -166,11 +174,15 @@ document.getElementById('myButton').addEventListener('click', (event)=>{
 });
 
 document.getElementById('suggestButton').addEventListener('click', (event)=>{
+    event.target.classList.add('wait');
     const data = gatherData('prompt');
     data.prompt = "Generate an AI prompt.";
     engine = document.getElementById('engine').value;
     postPrompt(data, engine)
-        .then(r => textArea.value = r.choices[0].text.trim());
+        .then(r => {
+            textArea.value = r.choices[0].text.trim()
+            event.target.classList.remove('wait');
+        });
 });
 
 function gatherData (omit = "") {
@@ -184,7 +196,6 @@ function gatherData (omit = "") {
 function userSubmitPrompt (data, engine, sourceElement) {
     sourceElement.disabled = true;
     sourceElement.classList.add('wait');
-    console.log(`I am posting ${JSON.stringify(data)} b`);
     postPrompt(data, engine).then(r => {
         logPrompt(data, engine, r.choices[0].text)
         sourceElement.disabled = false;
@@ -237,7 +248,6 @@ function generateListElement (data, engine, text, index) {
                     target.disabled = true;
                     target.classList.add('wait');
                     pResponse.classList.add('wait');
-                    console.log(`I am posting ${JSON.stringify(_data)} c`);
                     postPrompt(_data, engine)
                         .then(r => {
                             pResponse.textContent = r.choices[0].text;
