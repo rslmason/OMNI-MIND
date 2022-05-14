@@ -458,7 +458,7 @@ form fieldset.options legend {
   position: relative;
   z-index: 2;
 }
-form fieldset label, form fieldset input, form fieldset select {
+form fieldset label, form fieldset input {
   text-align: right;
 }
 form fieldset input {

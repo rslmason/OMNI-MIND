@@ -10,6 +10,8 @@ const cookieName = 'pastPrompts';
 let promptCookie = document.cookie.split(';').find(cookie => cookie.startsWith(`${cookieName}=`));
 let cookieArray = [];
 
+
+
 if (promptCookie) {
     cookieArray = JSON.parse(promptCookie.substring(12)).filter(x => x != undefined); 
     let j = 0;
@@ -93,25 +95,25 @@ document.querySelector('.deleteButton').addEventListener('click', (event)=> {
     document.getElementById('mask').classList.remove('show');
 });
 
-getEngines().then(r => {
-    let j = 1;
-    r.data.forEach(i => {
-        const name = i.id;
-        if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
-            const option = document.createElement("option");
-            option.value = i.id;
-            option.text = `${j++}. ${i.id.toUpperCase()}`;
-            engineSelect.appendChild(option);
-        }
-    });
-    document.getElementById('myButton').disabled = false;
-    }
-)
-// const option = document.createElement("option");
-// option.value = 'text-curie-001';
-// option.text = 'text-curie-001';
-// engineSelect.appendChild(option);
-// document.getElementById('myButton').disabled = false;
+// getEngines().then(r => {
+//     let j = 1;
+//     r.data.forEach(i => {
+//         const name = i.id;
+//         if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
+//             const option = document.createElement("option");
+//             option.value = i.id;
+//             option.text = `${j++}. ${i.id.toUpperCase()}`;
+//             engineSelect.appendChild(option);
+//         }
+//     });
+//     document.getElementById('myButton').disabled = false;
+//     }
+// )
+const option = document.createElement("option");
+option.value = 'text-curie-001';
+option.text = 'text-curie-001';
+engineSelect.appendChild(option);
+document.getElementById('myButton').disabled = false;
 
 const textArea = document.querySelector('textarea');
 
@@ -150,6 +152,7 @@ document.getElementById('suggestButton').addEventListener('click', (event)=>{
     const data = gatherData('prompt');
     data.prompt = "Generate an AI prompt.";
     engine = document.getElementById('engine').value;
+    console.log(`I am posting ${JSON.stringify(data)} a`);
     postPrompt(data, engine)
         .then(r => textArea.value = r.choices[0].text.trim());
 });
@@ -165,6 +168,7 @@ function gatherData (omit = "") {
 function userSubmitPrompt (data, engine, sourceElement) {
     sourceElement.disabled = true;
     sourceElement.classList.add('wait');
+    console.log(`I am posting ${JSON.stringify(data)} b`);
     postPrompt(data, engine).then(r => {
         logPrompt(data, engine, r.choices[0].text)
         sourceElement.disabled = false;
@@ -209,21 +213,43 @@ function generateListElement (data, engine, text, index) {
 
             const retryButton = document.createElement("button");
             retryButton.textContent = "Resubmit this prompt";
-            retryButton.addEventListener('click', (event) => {
-                let target = event.target;
-                target.disabled = true;
-                target.classList.add('wait');
-                pResponse.classList.add('wait');
-                postPrompt(data, engine)
-                    .then(r => {
-                        pResponse.textContent = r.choices[0].text;
-                        cookieArray[index].text = r.choices[0].text;
-                        updateCookie();
-                        target.disabled = false;
-                        target.classList.remove('wait');
-                        pResponse.classList.remove('wait');
-                    });
-            })
+
+            let rewrite = (data) => {
+                return (event) => {
+                    const _data = data;
+                    let target = event.target;
+                    target.disabled = true;
+                    target.classList.add('wait');
+                    pResponse.classList.add('wait');
+                    console.log(`I am posting ${JSON.stringify(_data)} c`);
+                    postPrompt(_data, engine)
+                        .then(r => {
+                            pResponse.textContent = r.choices[0].text;
+                            cookieArray[index].text = r.choices[0].text;
+                            updateCookie();
+                            target.disabled = false;
+                            target.classList.remove('wait');
+                            pResponse.classList.remove('wait');
+                        });
+                }
+            }
+
+            retryButton.addEventListener('click', rewrite(data));
+            // retryButton.addEventListener('click', (event) => {(event, thisData) => {
+                // let target = event.target;
+                // target.disabled = true;
+                // target.classList.add('wait');
+                // pResponse.classList.add('wait');
+                // postPrompt(thisData, engine)
+                //     .then(r => {
+                //         pResponse.textContent = r.choices[0].text;
+                //         cookieArray[index].text = r.choices[0].text;
+                //         updateCookie();
+                //         target.disabled = false;
+                //         target.classList.remove('wait');
+                //         pResponse.classList.remove('wait');
+                //     });
+// }})
             subDivOne.appendChild(retryButton);
     
             
