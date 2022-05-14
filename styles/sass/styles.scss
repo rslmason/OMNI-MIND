@@ -330,7 +330,15 @@ textarea {
     scrollbar-width: none;
 }
 
+#optionsCollapseButton {
+    visibility: hidden;
+}
+
 @media (max-width: 800px) {
+    html {
+        font-size: 56%;
+    }
+
     textarea {
         height: 30vh;
     }
@@ -371,7 +379,6 @@ textarea {
     }
     label {
         height: 4.4rem;
-
     }
     label, input, select {
         &.show {
