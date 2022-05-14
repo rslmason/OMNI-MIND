@@ -149,7 +149,7 @@ async function postPrompt(data, engine = 'text-curie-001') {
 }
 
 document.querySelectorAll('input').forEach(el=> el.addEventListener('keydown', (event)=>{
-    if (!event.key.match(/[0-9\.]/g) && !event.key.startsWith('Arrow')) {
+    if (!event.key.match(/[0-9\.]/g) && (!event.key.startsWith('Arrow') && (!event.key.startsWith('Backs') && !event.key.startsWith('Del')))) {
         event.preventDefault()
     }
 }));
@@ -169,7 +169,6 @@ document.getElementById('suggestButton').addEventListener('click', (event)=>{
     const data = gatherData('prompt');
     data.prompt = "Generate an AI prompt.";
     engine = document.getElementById('engine').value;
-    console.log(`I am posting ${JSON.stringify(data)} a`);
     postPrompt(data, engine)
         .then(r => textArea.value = r.choices[0].text.trim());
 });
