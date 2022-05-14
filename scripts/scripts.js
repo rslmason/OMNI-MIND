@@ -112,25 +112,25 @@ document.querySelector('.deleteButton').addEventListener('click', (event)=> {
     document.getElementById('mask').classList.remove('show');
 });
 
-// getEngines().then(r => {
-//     let j = 1;
-//     r.data.forEach(i => {
-//         const name = i.id;
-//         if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
-//             const option = document.createElement("option");
-//             option.value = i.id;
-//             option.text = `${j++}. ${i.id.toUpperCase()}`;
-//             engineSelect.appendChild(option);
-//         }
-//     });
-//     document.getElementById('myButton').disabled = false;
-//     }
-// )
-const option = document.createElement("option");
-option.value = 'text-curie-001';
-option.text = 'text-curie-001';
-engineSelect.appendChild(option);
-document.getElementById('myButton').disabled = false;
+getEngines().then(r => {
+    let j = 1;
+    r.data.forEach(i => {
+        const name = i.id;
+        if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
+            const option = document.createElement("option");
+            option.value = i.id;
+            option.text = `${j++}. ${i.id.toUpperCase()}`;
+            engineSelect.appendChild(option);
+        }
+    });
+    document.getElementById('myButton').disabled = false;
+    }
+)
+// const option = document.createElement("option");
+// option.value = 'text-curie-001';
+// option.text = 'text-curie-001';
+// engineSelect.appendChild(option);
+// document.getElementById('myButton').disabled = false;
 
 const textArea = document.querySelector('textarea');
 
