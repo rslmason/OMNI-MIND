@@ -80,7 +80,7 @@ button:disabled {
     }
 }
 
-button:hover, input:hover, input:focus, textarea:focus {
+button:hover, input:hover, input:focus, textarea:focus, select:hover {
     @include highlightText;
     @include highlightBorder;
 }
@@ -91,7 +91,7 @@ button:hover, input:hover, input:focus, textarea:focus {
 }
 
 
-.deleteButton, #optionButton {
+.deleteButton, #optionButton, #optionsCollapseButton {
     border: none;
     padding: .5rem;
     // color: inherit;
@@ -107,8 +107,8 @@ button:hover, input:hover, input:focus, textarea:focus {
 
 
 .deleteButton {
-    top: 0px;
-    right: 0px;
+    top: 0;
+    right: 0;
     position: absolute;
 
 }
@@ -123,10 +123,11 @@ button:hover, input:hover, input:focus, textarea:focus {
     inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
-    pointer-events: none;
     visibility: hidden;
+    // pointer-events: none;
     &.show {
         visibility: visible;
+        // pointer-events:initial;
     }
 }
 
@@ -136,11 +137,8 @@ textarea {
     resize: none;
     width: 100%;
     color: inherit;
-    // caret-color: $darkFontColoryellow;
     font-family: inherit;
-    // box-shadow: 2px 2px 0 0 $darkFontColor;
     height: 100%;
-    // border-radius: 1%;
     border-radius: .3rem;
     letter-spacing: .1rem;
     @include normalBorder;   
@@ -148,9 +146,10 @@ textarea {
 
 
 
-option {
-    white-space: pre;
-}
+// option {
+    // white-space: pre;
+    // padding: .5rem;
+// }
 
 
 div {
@@ -187,7 +186,6 @@ h1 {
         > div {
             padding: 2rem;
             &:nth-of-type(2) {
-                // text-align: right;
                 min-width: 25rem;
             }
         }
@@ -263,11 +261,14 @@ form {
         }
         select {
             width: 24rem;
+            padding: .5rem;
         }
     }
 }
 
-
+#optionsCollapseButton {
+    visibility: hidden;
+}
 
 #optionPanel {
     position: absolute;
@@ -301,7 +302,7 @@ label {
     }
     div {
         background-color: lightblue;
-        padding: 10px;
+        padding: 1rem;
         left: 100%;
         bottom: 100%;
         position: absolute;
@@ -327,4 +328,62 @@ textarea {
         display: none;
     }
     scrollbar-width: none;
+}
+
+@media (max-width: 800px) {
+    textarea {
+        height: 30vh;
+    }
+    form {
+        flex-direction: column;
+        fieldset {
+            &.prompt {width: 100%;}
+            &.options {
+                width: 100%;
+                flex-wrap: wrap;
+                #optionPanel {
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .wrapper {
+        max-width: none;
+        width: 95%;
+
+    }
+    #optionsCollapseButton {
+        visibility: visible;
+    }
+    form {
+        fieldset {
+            label, input, select {
+            width: calc(50% - 1rem);
+        }
+    }}  
+    button {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    input:nth-of-type(2) {
+        break-after: always;
+        margin-bottom: 0;
+    }
+    label {
+        height: 4.4rem;
+
+    }
+    label, input, select {
+        &.show {
+            visibility: visible;
+            position: relative
+        }
+        visibility: hidden;
+        position: absolute;
+    }
+    #output {
+        div {
+            flex-direction: column;
+        }
+    }
 }

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Web Application for Shopify Intern Application</title>
     <link rel="stylesheet" href="styles/styles.css">
-    <script>const maskedKey = 'ÂÛ°p«á¸Õ¦®×Ào×±çº×t{£Øº¶¯ÚuÉÑ©»Ôc¯Ëà¹ÝáÀÞe';</script>
 </head>
 <body>
     <div class="mask" id="mask"></div>
@@ -17,32 +16,31 @@
                 <legend>Prompt</legend>
                 <label for="prompt" class="sr-only">Prompt</label>
                 <textarea name="prompt" id="prompt" spellcheck="false"></textarea>
-                <!-- <p>▋</p> -->
                 <div>
                     <button id="myButton">Submit Prompt</button>
                     <button id="suggestButton">Suggest Prompt</button>
                 </div>
             </fieldset>
             <fieldset class="options">
-                <legend>Options<button id="optionButton">[?]</button></legend>
+                <legend><button id="optionsCollapseButton" aria-hidden="true">▼</button>Options<button id="optionButton" aria-hidden="true">[?]</button></legend>
                 
-                <label for="engine">Select engine:</label>
-                <select name="engine" id="engine"></select>
+                <label for="engine" class="show">Select engine:</label>
+                <select name="engine" id="engine" class="show"></select>
                 
-                <label for="temperature">temperature:<br>(0.0 to 1.0)</label>
-                <input type="number" id="temperature" name="temperature" value="1" step="0.1" min="0" max="1">
+                <label for="temperature" class="show">temperature:<br>(0.0 to 1.0)</label>
+                <input type="number" id="temperature" name="temperature" value="1" step="0.1" min="0" max="1" class="show">
 
-                <label for="max_tokens">max_tokens:<br>(1 to 2048)</label>
-                <input type="number" id="max_tokens" name="max_tokens" value="1024" step="1" min="1" max="2048">
+                <label for="max_tokens" class="show">max_tokens:<br>(1 to 2048)</label>
+                <input type="number" id="max_tokens" name="max_tokens" value="1024" step="1" min="1" max="2048" class="show">
 
-                <label for="top_p">top_p:<br>(0.0 to 1.0)</label>
-                <input type="number" id="top_p" name="top_p" value="1" step="0.1" min="0" max="1">
+                <label for="top_p" class="show">top_p:<br>(0.0 to 1.0)</label>
+                <input type="number" id="top_p" name="top_p" value="1" step="0.1" min="0" max="1" class="show">
 
-                <label for="frequency_penalty">frequency_penalty:<br>(-2.0 to 2.0)</label>
-                <input type="number" id="frequency_penalty" name="frequency_penalty" value="0" step="0.1" min="-2" max="2">
+                <label for="frequency_penalty" class="show">frequency_penalty:<br>(-2.0 to 2.0)</label>
+                <input type="number" id="frequency_penalty" name="frequency_penalty" value="0" step="0.1" min="-2" max="2" class="show">
 
-                <label for="presence_penalty">presence_penalty:<br>(-2.0 to 2.0)</label>
-                <input type="number" id="presence_penalty" name="presence_penalty" value="0" step="0.1" min="-2" max="2">
+                <label for="presence_penalty" class="show">presence_penalty:<br>(-2.0 to 2.0)</label>
+                <input type="number" id="presence_penalty" name="presence_penalty" value="0" step="0.1" min="-2" max="2" class="show">
 
                 <div id="optionPanel">
                     <button class="deleteButton">X</button>

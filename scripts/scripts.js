@@ -14,7 +14,6 @@ let cookieArray = [];
 
 if (promptCookie) {
     cookieArray = JSON.parse(promptCookie.substring(12)).filter(x => x != undefined); 
-    let j = 0;
     for (let i = 0; i < cookieArray.length; i++) {
         if (cookieArray[i]) {
             let {data, engine, text} = cookieArray[i];
@@ -34,7 +33,7 @@ for (input of document.getElementsByTagName('input')) {
     input.addEventListener('change',(event)=>{
         const target = event.target;
         if (target.value === "" || parseFloat(target.value) < target.min) {
-            target.value = target.min;
+            target.value = 0 && target.min;
         }
         else if (parseFloat(target.value) > target.max) {
             target.value = target.max;
@@ -49,10 +48,28 @@ for (input of document.getElementsByTagName('input')) {
     }
 }
 
-document.getElementById('optionButton').addEventListener ('click', ()=>{
-    document.getElementById('optionPanel').classList.toggle('show');
-    document.getElementById('mask').classList.toggle('show');
-})
+document.getElementById('optionButton').addEventListener ('click', toggleShowById('optionPanel', 'mask'))
+
+document.getElementById('mask').addEventListener ('click', toggleShowById('optionPanel', 'mask'))
+
+function toggleShowById (...args) {
+    return ()=>{
+        for (id of args) {
+            document.getElementById(id).classList.toggle('show');
+        }
+    }
+}
+
+function toggleShowElements (...args) {
+    return ()=>{
+        for (el of args) {
+            el.classList.toggle('show');
+        }
+    }
+}
+
+
+document.getElementById('optionsCollapseButton').addEventListener('click', toggleShowElements(...document.querySelectorAll('.options label, .options select, .options input')))
 
 const dataPrototype = {
     prompt: 'Write a poem about a dog wearing skis',
@@ -131,14 +148,14 @@ async function postPrompt(data, engine = 'text-curie-001') {
     return response.json();
 }
 
-document.querySelectorAll('input').forEach(el=> el.addEventListener('keypress', (event)=>{
-    console.log(event.key);
-    if (event.key = "Enter") {
+document.querySelectorAll('input').forEach(el=> el.addEventListener('keydown', (event)=>{
+    if (!event.key.match(/[0-9\.]/g) && !event.key.startsWith('Arrow')) {
         event.preventDefault()
     }
 }));
 
 document.querySelectorAll('form button').forEach(el=> el.addEventListener('click', (event)=>{
+    console.log(event.key);
     event.preventDefault();
 }));
 

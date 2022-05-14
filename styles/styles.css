@@ -275,7 +275,7 @@ button:disabled:hover {
   text-shadow: 1px 0px rgb(1, 107, 1), -1px 0px rgb(1, 107, 1);
 }
 
-button:hover, input:hover, input:focus, textarea:focus {
+button:hover, input:hover, input:focus, textarea:focus, select:hover {
   color: rgb(230, 255, 181);
   text-shadow: 1px 0px rgb(204, 255, 103), -1px 0px rgb(204, 255, 103);
   outline: 1px rgb(204, 255, 103) solid;
@@ -292,14 +292,14 @@ button:hover, input:hover, input:focus, textarea:focus {
   background-color: rgb(204, 255, 103);
 }
 
-.deleteButton, #optionButton {
+.deleteButton, #optionButton, #optionsCollapseButton {
   border: none;
   padding: 0.5rem;
   color: rgb(204, 255, 103);
   text-shadow: 1px 0px rgb(1, 107, 1), -1px 0px rgb(1, 107, 1);
   outline: none;
 }
-.deleteButton:hover, #optionButton:hover {
+.deleteButton:hover, #optionButton:hover, #optionsCollapseButton:hover {
   border: none;
   outline: none;
   color: rgb(230, 255, 181);
@@ -307,8 +307,8 @@ button:hover, input:hover, input:focus, textarea:focus {
 }
 
 .deleteButton {
-  top: 0px;
-  right: 0px;
+  top: 0;
+  right: 0;
   position: absolute;
 }
 
@@ -322,7 +322,6 @@ button:hover, input:hover, input:focus, textarea:focus {
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
-  pointer-events: none;
   visibility: hidden;
 }
 #mask.show {
@@ -341,10 +340,6 @@ textarea {
   letter-spacing: 0.1rem;
   outline: 1px rgb(1, 107, 1) solid;
   border: 1px rgb(204, 255, 103) solid;
-}
-
-option {
-  white-space: pre;
 }
 
 div {
@@ -480,6 +475,11 @@ form fieldset input:last-of-type {
 }
 form fieldset select {
   width: 24rem;
+  padding: 0.5rem;
+}
+
+#optionsCollapseButton {
+  visibility: hidden;
 }
 
 #optionPanel {
@@ -512,7 +512,7 @@ label:hover div {
 }
 label div {
   background-color: lightblue;
-  padding: 10px;
+  padding: 1rem;
   left: 100%;
   bottom: 100%;
   position: absolute;
@@ -536,4 +536,73 @@ textarea {
 }
 textarea::-webkit-scrollbar {
   display: none;
+}
+
+@media (max-width: 800px) {
+  textarea {
+    height: 30vh;
+  }
+
+  form {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  form fieldset.prompt {
+    width: 100%;
+  }
+  form fieldset.options {
+    width: 100%;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  form fieldset.options #optionPanel {
+    width: 100%;
+  }
+
+  .wrapper {
+    max-width: none;
+    width: 95%;
+  }
+
+  #optionsCollapseButton {
+    visibility: visible;
+  }
+
+  form fieldset label, form fieldset input, form fieldset select {
+    width: calc(50% - 1rem);
+  }
+
+  button {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  input:nth-of-type(2) {
+    -webkit-column-break-after: always;
+       -moz-column-break-after: always;
+            break-after: always;
+    margin-bottom: 0;
+  }
+
+  label {
+    height: 4.4rem;
+  }
+
+  label, input, select {
+    visibility: hidden;
+    position: absolute;
+  }
+  label.show, input.show, select.show {
+    visibility: visible;
+    position: relative;
+  }
+
+  #output div {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
 }
