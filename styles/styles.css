@@ -265,21 +265,18 @@ button {
   border-radius: 0.3rem;
 }
 
-button:disabled {
-  color: rgb(1, 107, 1);
-}
-button:disabled:hover {
-  outline: 1px rgb(1, 107, 1) solid;
-  border: 1px rgb(204, 255, 103) solid;
-  color: rgb(204, 255, 103);
-  text-shadow: 1px 0px rgb(1, 107, 1), -1px 0px rgb(1, 107, 1);
-}
-
 button:hover, input:hover, input:focus, textarea:focus, select:hover {
   color: rgb(230, 255, 181);
   text-shadow: 1px 0px rgb(204, 255, 103), -1px 0px rgb(204, 255, 103);
   outline: 1px rgb(204, 255, 103) solid;
   border: 1px rgb(230, 255, 181) solid;
+}
+button:hover.wait, input:hover.wait, input:focus.wait, textarea:focus.wait, select:hover.wait {
+  outline: 1px rgb(1, 107, 1) solid;
+  border: 1px rgb(204, 255, 103) solid;
+  color: rgb(204, 255, 103);
+  text-shadow: 1px 0px rgb(1, 107, 1), -1px 0px rgb(1, 107, 1);
+  color: rgb(1, 107, 1);
 }
 
 ::-moz-selection {
@@ -380,6 +377,9 @@ h1 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   outline: 1px rgb(1, 107, 1) solid;
   border: 1px rgb(204, 255, 103) solid;
   border-radius: 0.4rem;
@@ -390,6 +390,7 @@ h1 {
 }
 #output > div > div:nth-of-type(2) {
   min-width: 25rem;
+  white-space: pre;
 }
 
 legend {
@@ -510,17 +511,6 @@ form fieldset select {
 
 label {
   position: relative;
-}
-label:hover div {
-  visibility: visible;
-}
-label div {
-  background-color: lightblue;
-  padding: 1rem;
-  left: 100%;
-  bottom: 100%;
-  position: absolute;
-  visibility: hidden;
 }
 
 /* Chrome, Safari, Edge, Opera */

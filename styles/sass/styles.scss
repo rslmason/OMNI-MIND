@@ -68,21 +68,18 @@ input, select, legend, button, textarea {
 button {
     // position: relative;
     @include normalBorder;
-    // border-radius: 4%;
     border-radius: .3rem;
 }
 
-button:disabled {
-    color: $darkFontColor;
-    &:hover {
-        @include normalBorder;
-        @include normalText;
-    }
-}
 
 button:hover, input:hover, input:focus, textarea:focus, select:hover {
     @include highlightText;
     @include highlightBorder;
+    &.wait {
+        @include normalBorder;
+        @include normalText;
+        color: $darkFontColor;
+    }
 }
 
 ::selection {
@@ -102,7 +99,6 @@ button:hover, input:hover, input:focus, textarea:focus, select:hover {
         outline: none;
         @include highlightText();
     }
-
 }
 
 
@@ -182,6 +178,7 @@ h1 {
     > div {
         position: relative;
         display: flex;
+        justify-content: space-between;
         @include normalBorder;
         border-radius: .4rem;
         margin-top: 3rem;
@@ -189,6 +186,7 @@ h1 {
             padding: 2rem;
             &:nth-of-type(2) {
                 min-width: 25rem;
+                white-space: pre;
             }
         }
     }
@@ -297,19 +295,6 @@ form {
 
 label {
     position: relative;
-    &:hover{
-        div {
-            visibility: visible
-        }
-    }
-    div {
-        background-color: lightblue;
-        padding: 1rem;
-        left: 100%;
-        bottom: 100%;
-        position: absolute;
-        visibility: hidden;
-    }
 }
 
 // from w3schools
