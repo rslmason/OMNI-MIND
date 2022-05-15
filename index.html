@@ -17,7 +17,7 @@
                 <label for="prompt" class="sr-only">Prompt</label>
                 <textarea name="prompt" id="prompt" spellcheck="false"></textarea>
                 <div>
-                    <button id="myButton">Submit Prompt</button>
+                    <button id="createNewButton">Submit Prompt</button>
                     <button id="suggestButton">Suggest Prompt</button>
                 </div>
             </fieldset>
@@ -27,11 +27,11 @@
                 <label for="engine" class="show">Select engine:</label>
                 <select name="engine" id="engine" class="show"></select>
                 
-                <label for="temperature" class="show">temperature:<br>(0.0 to 1.0)</label>
-                <input type="number" id="temperature" name="temperature" value="1" step="0.1" min="0" max="1" class="show">
-
                 <label for="max_tokens" class="show">max_tokens:<br>(1 to 2048)</label>
                 <input type="number" id="max_tokens" name="max_tokens" value="1024" step="1" min="1" max="2048" class="show">
+                
+                <label for="temperature" class="show">temperature:<br>(0.0 to 1.0)</label>
+                <input type="number" id="temperature" name="temperature" value="1" step="0.1" min="0" max="1" class="show">
 
                 <label for="top_p" class="show">top_p:<br>(0.0 to 1.0)</label>
                 <input type="number" id="top_p" name="top_p" value="1" step="0.1" min="0" max="1" class="show">
