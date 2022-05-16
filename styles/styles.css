@@ -225,44 +225,21 @@ html {
   font-size: 62.5%;
 }
 
-.wait {
-  cursor: progress;
-  color: rgb(1, 107, 1);
+.wrapper {
+  width: 90%;
+  max-width: 75rem;
+  margin: auto;
 }
 
-body {
+body, button, textarea, input, select, option, #optionPanel {
   background-color: black;
-}
-body main {
-  background-color: inherit;
-}
-body main form {
-  background-color: inherit;
-}
-body main form fieldset {
-  background-color: inherit;
-}
-body main form fieldset div {
-  background-color: black;
-}
-
-body, input, select, legend, button, textarea, div, label {
-  font-size: 1.8rem;
-  letter-spacing: 0.2rem;
-  color: rgb(204, 255, 103);
-  text-shadow: 1px 0px rgb(1, 107, 1), -1px 0px rgb(1, 107, 1);
-  color: rgb(204, 255, 103);
-  font-family: Courier, monospace;
-}
-
-input, select, legend, button, textarea {
-  background-color: inherit;
 }
 
 button {
   outline: 1px rgb(1, 107, 1) solid;
   border: 1px rgb(204, 255, 103) solid;
   border-radius: 0.3rem;
+  padding: 0.5rem;
 }
 
 button:hover, input:hover, input:focus, textarea:focus, select:hover {
@@ -279,31 +256,25 @@ button:hover.wait, input:hover.wait, input:focus.wait, textarea:focus.wait, sele
   color: rgb(1, 107, 1);
 }
 
-::-moz-selection {
-  color: black;
-  background-color: rgb(204, 255, 103);
+.wait {
+  cursor: progress;
+  color: rgb(1, 107, 1);
 }
 
-::selection {
-  color: black;
-  background-color: rgb(204, 255, 103);
-}
-
-.deleteButton, #optionButton, #optionsCollapseButton {
+.closeButton, #optionButton, #optionsCollapseButton {
   border: none;
-  padding: 0.5rem;
   color: rgb(204, 255, 103);
   text-shadow: 1px 0px rgb(1, 107, 1), -1px 0px rgb(1, 107, 1);
   outline: none;
 }
-.deleteButton:hover, #optionButton:hover, #optionsCollapseButton:hover {
+.closeButton:hover, #optionButton:hover, #optionsCollapseButton:hover {
   border: none;
   outline: none;
   color: rgb(230, 255, 181);
   text-shadow: 1px 0px rgb(204, 255, 103), -1px 0px rgb(204, 255, 103);
 }
 
-.deleteButton {
+.closeButton {
   top: 0;
   right: 0;
   position: absolute;
@@ -314,10 +285,24 @@ button:hover.wait, input:hover.wait, input:focus.wait, textarea:focus.wait, sele
   font-size: inherit;
 }
 
+#optionsCollapseButton {
+  visibility: hidden;
+}
+
+::-moz-selection {
+  color: black;
+  background-color: rgb(204, 255, 103);
+}
+
+::selection {
+  color: black;
+  background-color: rgb(204, 255, 103);
+}
+
 #mask {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 1;
   visibility: hidden;
 }
@@ -330,16 +315,13 @@ textarea {
   padding: 2rem;
   resize: none;
   width: 100%;
-  color: inherit;
-  font-family: inherit;
   height: 100%;
   border-radius: 0.3rem;
-  letter-spacing: 0.1rem;
   outline: 1px rgb(1, 107, 1) solid;
   border: 1px rgb(204, 255, 103) solid;
 }
 
-div {
+div, fieldset {
   margin: 0;
 }
 
@@ -347,24 +329,79 @@ p {
   overflow-wrap: break-word;
 }
 
-.wrapper {
-  width: 90%;
-  max-width: 75rem;
-  margin: auto;
+body, input, select, legend, button, textarea, div, label {
+  font-size: 1.8rem;
+  letter-spacing: 0.2rem;
+  color: rgb(204, 255, 103);
+  text-shadow: 1px 0px rgb(1, 107, 1), -1px 0px rgb(1, 107, 1);
+  color: rgb(204, 255, 103);
+  font-family: Courier, monospace;
 }
 
 h1, label, input, select, button, form, legend {
   text-transform: uppercase;
 }
 
-h1 {
+h1, h2 {
   font-weight: inherit;
+  display: inline-block;
 }
 
-#output {
+h1 {
+  font-size: 3.6rem;
+}
+
+h2 {
+  font-size: 1.6rem;
+}
+
+legend {
+  font-size: 2.2rem;
+}
+
+div, form, fieldset {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+fieldset {
+  position: relative;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: none;
+  padding: 0;
+}
+fieldset.prompt {
+  width: calc(66% - 1rem);
+  position: relative;
+}
+fieldset.prompt div {
+  margin-top: 2rem;
+}
+fieldset.options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  width: 33%;
+  min-width: 25rem;
+}
+fieldset.options legend {
+  width: 100%;
+  text-align: right;
+  position: relative;
+  z-index: 2;
+}
+
+#output {
   -webkit-box-orient: vertical;
   -webkit-box-direction: reverse;
       -ms-flex-direction: column-reverse;
@@ -374,18 +411,13 @@ h1 {
 }
 #output > div {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   outline: 1px rgb(1, 107, 1) solid;
   border: 1px rgb(204, 255, 103) solid;
   border-radius: 0.4rem;
   margin-top: 3rem;
 }
 #output > div > div {
+  display: block;
   padding: 2rem;
 }
 #output > div > div:nth-of-type(2) {
@@ -393,101 +425,8 @@ h1 {
   white-space: pre;
 }
 
-legend {
-  text-shadow: inherit;
-  font-size: 2.2rem;
-}
-
-form {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-form fieldset {
-  position: relative;
-  border: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  margin: 0;
-  padding: 0;
-}
-form fieldset legend {
-  margin-bottom: 1rem;
-  text-decoration: underline;
-}
-form fieldset.prompt {
-  width: calc(66% - 1rem);
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  position: relative;
-}
-form fieldset.prompt div {
-  margin-top: 2rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-form fieldset.options {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: 33%;
-  min-width: 25rem;
-}
-form fieldset.options legend {
-  width: 100%;
-  text-align: right;
-  position: relative;
-  z-index: 2;
-}
-form fieldset label, form fieldset input {
-  text-align: right;
-}
-form fieldset input {
-  width: 7rem;
-  padding: 0.5rem;
-  border-radius: 5%;
-}
-form fieldset input, form fieldset select {
-  margin-bottom: 1rem;
-  background-color: inherit;
-  color: inherit;
-  font-family: inherit;
-  outline: 1px rgb(1, 107, 1) solid;
-  border: 1px rgb(204, 255, 103) solid;
-  border-radius: 0.3rem;
-}
-form fieldset input:last-of-type {
-  margin-bottom: 0;
-}
-form fieldset select {
-  width: 24rem;
-  padding: 0.5rem;
-}
-
-#optionsCollapseButton {
-  visibility: hidden;
-}
-
 #optionPanel {
+  display: block;
   position: absolute;
   top: 0;
   right: 0;
@@ -507,6 +446,37 @@ form fieldset select {
 }
 #optionPanel.show {
   visibility: visible;
+}
+
+legend {
+  margin-bottom: 1rem;
+  text-decoration: underline;
+}
+
+label, input, select {
+  text-align: right;
+}
+
+input, select {
+  margin-bottom: 1rem;
+  font-family: inherit;
+  outline: 1px rgb(1, 107, 1) solid;
+  border: 1px rgb(204, 255, 103) solid;
+  border-radius: 0.3rem;
+}
+
+input {
+  width: 7rem;
+  padding: 0.5rem;
+}
+
+input:last-of-type {
+  margin-bottom: 0;
+}
+
+select {
+  width: 24rem;
+  padding: 0.5rem;
 }
 
 label {
@@ -532,20 +502,23 @@ textarea::-webkit-scrollbar {
   display: none;
 }
 
-#optionsCollapseButton {
-  visibility: hidden;
-}
-
 @media (max-width: 800px) {
   html {
     font-size: 56%;
   }
 
-  textarea {
-    height: 30vh;
+  .wrapper {
+    max-width: none;
+    width: 95%;
   }
 
   form {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  form fieldset {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -555,44 +528,17 @@ textarea::-webkit-scrollbar {
     width: 100%;
   }
   form fieldset.options {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     width: 100%;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
   }
   form fieldset.options #optionPanel {
     width: 100%;
   }
 
-  .wrapper {
-    max-width: none;
-    width: 95%;
-  }
-
-  #optionsCollapseButton {
-    visibility: visible;
-  }
-
-  form fieldset label, form fieldset input, form fieldset select {
-    width: 100%;
-    visibility: hidden;
-    position: absolute;
-  }
-  form fieldset label.show, form fieldset input.show, form fieldset select.show {
-    visibility: visible;
-    position: relative;
-  }
-  form fieldset label label, form fieldset input label, form fieldset select label {
-    height: 4.4rem;
-  }
-
-  button {
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  label {
-    height: 4.4rem;
-    text-align: left;
+  textarea {
+    height: 30vh;
   }
 
   #output div {
@@ -600,5 +546,28 @@ textarea::-webkit-scrollbar {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+  }
+
+  button {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  #optionsCollapseButton {
+    visibility: visible;
+  }
+
+  label, input, select {
+    width: 100%;
+    visibility: hidden;
+    position: absolute;
+  }
+  label.show, input.show, select.show {
+    visibility: visible;
+    position: relative;
+  }
+
+  label {
+    height: 4.4rem;
   }
 }

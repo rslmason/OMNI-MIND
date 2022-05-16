@@ -1,5 +1,11 @@
+// localStorage.removeItem('array');
+// for (let i = 0; i < 2000; i++) {
+//     localStorage.removeItem(String(i));
+// }
+
 document.getElementById('createNewButton').disabled = true; // If you just disable this in the HTML, it won't necessarily be disabled on page reload.
 const textArea = document.querySelector('textarea');
+const output = document.getElementById('output');
 
 const maskString = 'Open the pod bay doors, Hal.';
 const apiKey = deobfuscator(maskedKey, maskString);
@@ -12,24 +18,18 @@ function deobfuscator (strOne, strTwo) {
     return String.fromCharCode(...strArray)
 }
 
-const output = document.getElementById('output');
+// Form/page functionality ------
 
-const cookieName = 'pastPrompts';
-let promptCookie = document.cookie.split(';').find(cookie => cookie.startsWith(`${cookieName}=`));
-let cookieArray = [];
-
-
-if (promptCookie) {
-    cookieArray = JSON.parse(promptCookie.substring(12)).filter(x => x != undefined); 
-    for (let i = 0; i < cookieArray.length; i++) {
-        if (cookieArray[i]) {
-            let {data, engine, text} = cookieArray[i];
-            generateListElement(data, engine, text, i);
-        }
+document.querySelectorAll('input').forEach(el=> el.addEventListener('keydown', (event)=>{
+    if (!event.key.match(/[0-9\.\-]/g) && (!event.key.startsWith('Arrow') && (!event.key.startsWith('Backs') && !event.key.startsWith('Del')))) {
+        event.preventDefault()
     }
-}
+}));
 
-// form functionality
+document.querySelectorAll('form button').forEach(el=> el.addEventListener('click', (event)=>{
+    event.preventDefault();
+}));
+
 for (input of document.getElementsByTagName('input')) {
     input.addEventListener('change',(event)=>{
         target = event.target;
@@ -69,7 +69,6 @@ function toggleShowElements (...args) {
     }
 }
 
-
 document.getElementById('optionsCollapseButton').addEventListener('click', toggleShowElements(...document.querySelectorAll('.options label, .options select, .options input')))
 document.getElementById('optionsCollapseButton').addEventListener('click', (event)=>{
     if (event.target.textContent == "▼") {
@@ -80,231 +79,12 @@ document.getElementById('optionsCollapseButton').addEventListener('click', (even
     }
 })
 
-// let indexArray = [];
-//  localStorage.getItem('indexArray').json().then(stored =>
-//     if (stored) {
+document.querySelector('.closeButton').addEventListener('click', (event)=> {
+    event.target.parentElement.classList.remove('show');
+    document.getElementById('mask').classList.remove('show');
+});
 
-//     }
-// ) || 0;
-
-// let indexArray = localStorage.getItem('indexArray') || [];
-let indexArray = [];
-// indexArray = [3, 4, 5];
-let indexCounter = indexArray.length && (indexArray[indexArray.length - 1] + 1);
-
-
-function Prompt ({params, engine, text, index} = {}) {
-    if (params && engine && text && index) {
-        console.log('creating prompt from existing object')
-        this.params = params;
-        this.engine = engine;
-        this.text = text;
-        this.index = index;
-    }
-    else {
-        // this.getParams = function () {
-        //     return {
-        this.params = {
-            prompt: String(document.getElementById('prompt').value), // why do I need String() here?
-            temperature: parseFloat(document.getElementById('temperature').value),
-            max_tokens: parseInt(document.getElementById('max_tokens').value),
-            top_p: parseFloat(document.getElementById('top_p').value),
-            frequency_penalty: parseFloat(document.getElementById('frequency_penalty').value),
-            presence_penalty: parseFloat(document.getElementById('presence_penalty').value),
-        };
-        this.text = '...';
-        this.engine = document.getElementById('engine').value;
-        this.index = indexCounter++;
-        indexArray.push(this.index);
-    }
-
-    this.getText = async function () {
-        console.log('getText attempt');
-        const response = await fetch(
-            `https://api.openai.com/v1/engines/${this.engine}/completions`,
-            {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${apiKey}`,
-                },
-                body: JSON.stringify(this.params),
-            }
-        );
-        const json = await response.json();
-        this.text = json.choices[0].text;
-        // localStorage.setItem(this.index, JSON.stringify({this.params, this.engine, this.text, this.index}));
-        return this.text
-    };
-}
-
-document.getElementById('createNewButton').addEventListener('click', function (Prompt) {
-        return (event) => {
-            putPromptOnPage(event.target, new Prompt);
-            console.log(Prompt)
-        }
-        
-    }(Prompt) 
-);
-
-document.getElementById('suggestButton').addEventListener('click', function (Prompt) {
-    
-    return (event) => {
-        textArea.value = "Suggest an AI prompt."
-        writePromptToElement(textArea, [event.target, textArea], new Prompt)
-        // pResponse, retryButton, promptObj
-    }
-    }(Prompt)
-)
-
-// document.getElementById('suggestButton').addEventListener('click', (event)=>{
-//     event.target.classList.add('wait');
-//     const data = gatherData('prompt');
-//     data.prompt = "Generate an AI prompt.";
-//     engine = document.getElementById('engine').value;
-//     postPrompt(data, engine)
-//         .then(r => {
-//             textArea.value = r.choices[0].text.trim()
-//             event.target.classList.remove('wait');
-//         });
-// });
-
-function putPromptOnPage(target, promptObj){
-    const mainDiv = document.createElement("div");
-
-        const deleteButton = document.createElement("button");
-            deleteButton.textContent = "X";
-            deleteButton.classList.add("deleteButton");
-            deleteButton.addEventListener('click', () => {
-                mainDiv.remove();
-                //delete cookieArray[index];
-                //updateCookie();
-                // localStorage.removeItem(indexArray[splice(promptObj.index,1)[0]]);
-
-            })
-            mainDiv.appendChild(deleteButton);
-        
-        const subDivOne = document.createElement("div");
-            const pPrompt = document.createElement("p");
-            const tPrompt = document.createTextNode(promptObj.params.prompt || "[no prompt provided]");
-            pPrompt.appendChild(tPrompt);
-            subDivOne.appendChild(pPrompt);
-
-            const pResponse = document.createElement("p");
-            const tResponse = document.createTextNode(promptObj.text);
-            pResponse.appendChild(tResponse);
-            subDivOne.appendChild(pResponse);
-
-        const retryButton = document.createElement("button");
-        retryButton.textContent = "Resubmit this prompt";
-
-
-        retryButton.addEventListener('click', ()=>{writePromptToElement(pResponse, [retryButton], promptObj)});
-        subDivOne.appendChild(retryButton);
-
-            mainDiv.appendChild(subDivOne)
-
-
-            const subDivTwo = document.createElement("div");
-            const dataP = document.createElement("p");
-            const br = document.createElement('br');
-            dataP.append(`engine:`, br, promptObj.engine)            
-            for (property of ['max_tokens', 'temperature', 'top_p', 'frequency_penalty', 'presence_penalty']){
-                const br = document.createElement("br");
-                dataP.append(br, `${property.match(/(^[a-z])|(_[a-z])/g).join('').padStart(3, ' ')}: ${promptObj.params[property]}`);
-            }
-            subDivTwo.appendChild(dataP);
-            mainDiv.appendChild(subDivTwo);
-
-        output.append(mainDiv);
-
-        writePromptToElement(pResponse, [target], promptObj);
-}
-
-function writePromptToElement (element, targetArray, promptObj) {
-    targetArray.forEach(tar => {
-        tar.disabled = true;
-        tar.classList.add('wait');
-    });
-    element.classList.add('wait');
-    promptObj.getText().then(t => {
-        element.tagName == 'P'? element.textContent = t.trim() : element.value = t.trim();
-        targetArray.forEach(tar => {
-            tar.disabled = false;
-            tar.classList.remove('wait');
-        });
-        element.classList.remove('wait');
-    })
-}
-
-// let writePromptToDiv = (promptObj, source, target) => {
-//     console.log('did');
-//     element.disabled = true;
-//     element.classList.add('wait');
-//     pResponse.classList.add('wait');
-//     promptObj.getText().then(t => {
-//         pResponse.textContent = t;
-//         retryButton.disabled = false;
-//         retryButton.classList.remove('wait');
-//         pResponse.classList.remove('wait');
-//         console.log('dad');
-//     });
-// }
- // p tag!
-
-
-
-    // const myNewData = new Prompt(
-    //     {
-    //         prompt: 'Write a poem about a dog wearing skis',
-    //         temperature: 1.0,
-    //         max_tokens: 64,
-    //         top_p: 1.0,
-    //         frequency_penalty: 0.0,
-    //         presence_penalty: 0.0,
-    //     },
-    //     'text-curie-001',
-    //     indexCounter++,
-    // )
-
-// myNewData.getText();
-
-// console.log(myNewData.getText())
-
-
-// function Prompt (data, engine, index, text) {
-//     for (key of this.prototype.parsingFunction.keys()) {
-//         this.data[key] = document.getElementById[key];
-//     }
-//     this.data = data;
-//     this.engine = engine;
-//     this.index = index
-//     if (text) this.text = text;
-//     // this.text
-// }
-
-// ---------------
-
-const dataPrototype = {
-    prompt: 'Write a poem about a dog wearing skis',
-    temperature: 1.0,
-    max_tokens: 64,
-    top_p: 1.0,
-    frequency_penalty: 0.0,
-    presence_penalty: 0.0,
-}
-
-Object.defineProperty(dataPrototype, 'parsingFunction',{
-    value: {
-        prompt: x => x,
-        temperature: parseFloat,
-        max_tokens: parseInt,
-        top_p: parseFloat,
-        frequency_penalty: parseFloat,
-        presence_penalty: parseFloat,
-    },
-    enumerable: false,
-})
+// App Setup ------
 
 async function getEngines() {
     const response = await fetch ('https://api.openai.com/v1/engines',
@@ -317,61 +97,212 @@ async function getEngines() {
     return response.json();
 }
 
-let engineSelect = document.getElementById('engine');
 const requireStrings = ['text'];
 const excludeStrings = ['search','code','similarity','edit','insert'];
 
-document.querySelector('.deleteButton').addEventListener('click', (event)=> {
-    event.target.parentElement.classList.remove('show');
-    document.getElementById('mask').classList.remove('show');
-});
-
-// getEngines().then(r => {
-//     let j = 1;
-//     r.data.forEach(i => {
-//         const name = i.id;
-//         if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
-//             const option = document.createElement("option");
-//             option.value = i.id;
-//             option.text = `${j++}. ${i.id.toUpperCase()}`;
-//             engineSelect.appendChild(option);
-//         }
-//     });
-//     document.getElementById('createNewButton').disabled = false;
-//     }
-// )
-const option = document.createElement("option");
-option.value = 'text-curie-001';
-option.text = 'text-curie-001';
-engineSelect.appendChild(option);
-document.getElementById('createNewButton').disabled = false;
-
-
-
-async function postPrompt(data, engine = 'text-curie-001') {
-    delete data.parsingFunction;
-    const response = await fetch(`https://api.openai.com/v1/engines/${engine}/completions`,
-        {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify(data),
+getEngines().then(r => {
+    let j = 1;
+    r.data.forEach(i => {
+        const name = i.id;
+        if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
+            const option = document.createElement("option");
+            option.value = i.id;
+            option.text = `${j++}. ${i.id.toUpperCase()}`.padEnd(19, ' ');
+            document.getElementById('engine').appendChild(option);
         }
-    );
-    return response.json();
+    });
+    document.getElementById('createNewButton').disabled = false;
+    }
+)
+// const option = document.createElement("option");
+// option.value = 'text-curie-001';
+// option.text = 'text-curie-001';
+// engineSelect.appendChild(option);
+// document.getElementById('createNewButton').disabled = false;
+
+document.getElementById('createNewButton').addEventListener('click', function (Prompt) {
+    return (event) => {
+        const newPrompt = new Prompt;
+        newPrompt.makeHome();
+        newPrompt.writeStore(event.target);
+    }
+    }(Prompt)
+);
+
+document.getElementById('suggestButton').addEventListener('click', function (Prompt) {
+    return (event) => {
+        textArea.value = "Suggest an AI prompt."
+        const newPrompt = new Prompt;
+        newPrompt.writeTemp(textArea, [textArea, event.target]);
+    }
+    }(Prompt)
+)
+
+function Prompt ({params, engine, text, index} = {}) {
+    if (params) {
+        this.params = params;
+        this.engine = engine;
+        this.text = text;
+        this.index = index;
+    }
+    else {
+        this.params = {
+            prompt:             String(document.getElementById('prompt').value), // why do I need String() here?
+            temperature:        parseFloat(document.getElementById('temperature').value),
+            max_tokens:         parseInt(document.getElementById('max_tokens').value),
+            top_p:              parseFloat(document.getElementById('top_p').value),
+            frequency_penalty:  parseFloat(document.getElementById('frequency_penalty').value),
+            presence_penalty:   parseFloat(document.getElementById('presence_penalty').value),
+        };
+        this.engine = document.getElementById('engine').value;
+        this.text = '...';
+        this.index = indexCounter++;
+    }
 }
 
-document.querySelectorAll('input').forEach(el=> el.addEventListener('keydown', (event)=>{
-    if (!event.key.match(/[0-9\.\-]/g) && (!event.key.startsWith('Arrow') && (!event.key.startsWith('Backs') && !event.key.startsWith('Del')))) {
-        event.preventDefault()
-    }
-}));
+const promptPrototype = {
+    async getText () {
+        const response = await fetch(
+            `https://api.openai.com/v1/engines/${this.engine}/completions`,
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify(this.params),
+            }
+        );
+        const json = await response.json();
+        this.text = json.choices[0].text.trim();
+        return this.text;
+    },
 
-document.querySelectorAll('form button').forEach(el=> el.addEventListener('click', (event)=>{
-    event.preventDefault();
-}));
+    async write () {
+        this.hold(true);
+        t = String(await this.getText());
+        if (this.location.tagName == "TEXTAREA") {
+            this.location.value = t;
+        }
+        else {
+            this.location.textContent = t;
+        }; 
+        this.hold(false);
+        return;
+    },
+
+    writeTemp (location, elements) {
+        this.location = location;
+        this.assocElements = elements;
+        this.write()
+    },
+
+    async writeStore (source) {
+        if (source) {
+            this.assocElements.push(source);
+        }
+        await this.write();
+        if (source) {
+            this.assocElements.pop();
+        };
+        localStorage.setItem(
+            String(this.index), 
+            JSON.stringify({
+                params: this.params,
+                engine: this.engine,
+                text: this.text,
+                index: this.index
+            })
+        );
+        // indexArray.push(this.index);
+        if (!indexArray.includes(this.index)) {
+            indexArray.push(this.index);
+            localStorage.setItem(
+                'array',
+                JSON.stringify(indexArray)
+            )
+        }
+
+    },
+
+    unStore() {
+        localStorage.removeItem(String(this.index));
+        indexArray.splice(indexArray.indexOf(this.index),1);
+        localStorage.setItem('array',JSON.stringify(indexArray))
+    },
+
+    copy () {
+        this.location.textContent = this.text;
+    },
+
+    hold (bool) {
+        if (bool) {
+            for (el of this.assocElements) {
+                el.classList.add('wait');
+                if (el.tagName = 'button') el.disabled=true;
+            }
+        }
+        else {
+            for (el of this.assocElements) {
+                el.classList.remove('wait');
+                if (el.tagName = 'button') el.disabled=false;
+            }
+        }
+    },
+
+    makeHome () {
+        const dContainer = document.createElement('div');
+            const bClose = document.createElement('button');
+                bClose.textContent = 'X';
+                bClose.classList.add('closeButton');
+                bClose.addEventListener('click', ()=>{
+                    dContainer.remove();
+                    this.unStore();
+                })
+            const dTextContainer = document.createElement('div');
+                const pPrompt = document.createElement('p');
+                    pPrompt.append(this.params.prompt || 'no prompt provided')
+                const pResponse = document.createElement('p');
+                    pResponse.append(this.text);
+                    this.location = pResponse;
+                const bRetry = document.createElement('button');
+                    bRetry.textContent = 'Resubmit this prompt';
+                    bRetry.addEventListener('click', ()=>{
+                        this.writeStore();
+                    })
+                this.assocElements = [pResponse, bRetry];
+            dTextContainer.append(pPrompt, pResponse, bRetry);
+            const dInfoContainer = document.createElement('div');
+                    const pParams = document.createElement('p');
+                    pParams.append(`engine:`, document.createElement('br'), this.engine);  
+                        for (property of ['max_tokens', 'temperature', 'top_p', 'frequency_penalty', 'presence_penalty']) {
+                            pParams.append(document.createElement('br'), `${property.match(/(^[a-z])|(_[a-z])/g).join('').padStart(3, ' ')}: ${String(this.params[property]).padStart(4, ' ')}`);
+                        };
+            dInfoContainer.append(pParams);
+        dContainer.append(bClose, dTextContainer, dInfoContainer);
+        output.append(dContainer);
+    }
+}
+
+Prompt.prototype = promptPrototype;
+
+let indexArray = JSON.parse(localStorage.getItem('array')) || [];
+let indexCounter = indexArray.length && (indexArray.at(-1) + 1);
+
+for (i of indexArray) {
+    let restorePrompt = new Prompt(JSON.parse(localStorage.getItem(String(i))));
+    console.log(restorePrompt);
+    restorePrompt.makeHome();
+    restorePrompt.copy();
+}
+
+
+
+
+
+
+
+
 
 
 
