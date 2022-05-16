@@ -1,7 +1,4 @@
-// localStorage.removeItem('array');
-// for (let i = 0; i < 2000; i++) {
-//     localStorage.removeItem(String(i));
-// }
+
 const newButton = document.getElementById('createNewButton');
 const suggestButton = document.getElementById('suggestButton');
 buttons = [newButton, suggestButton];
@@ -122,7 +119,6 @@ getEngines().then(r => {
     option.text = 'text-curie-001';
     document.getElementById('engine').appendChild(option);
     disableButtons(false);
-    console.log(error);
 })
 
 function disableButtons (bool) {
@@ -186,7 +182,6 @@ const promptPrototype = {
                     body: JSON.stringify(this.params),
                 }
             );
-            console.log(response.ok);
             const json = await response.json();
             this.text = json.choices[0].text.trim();
         }
@@ -309,11 +304,15 @@ Prompt.prototype = promptPrototype;
 let indexArray = JSON.parse(localStorage.getItem('array')) || [];
 let indexCounter = indexArray.length && (indexArray.at(-1) + 1);
 
-for (i of indexArray) {
-    let restorePrompt = new Prompt(JSON.parse(localStorage.getItem(String(i))));
-    console.log(restorePrompt);
-    restorePrompt.makeHome();
-    restorePrompt.copy();
+try {
+    for (i of indexArray) {
+        let restorePrompt = new Prompt(JSON.parse(localStorage.getItem(String(i))));
+        restorePrompt.makeHome();
+        restorePrompt.copy();
+    }
+}
+catch {
+    localStorage.clear();
 }
 
 
