@@ -261,6 +261,22 @@ button:hover.wait, button:focus.wait, input:hover.wait, input:focus.wait, textar
   color: rgb(1, 107, 1);
 }
 
+p.wait, textarea.wait {
+  -webkit-animation: blinker 1s cubic-bezier(1, -0.04, 0, 1.06) infinite;
+          animation: blinker 1s cubic-bezier(1, -0.04, 0, 1.06) infinite;
+}
+
+@-webkit-keyframes blinker {
+  0% {
+    color: rgb(230, 255, 181);
+  }
+}
+
+@keyframes blinker {
+  0% {
+    color: rgb(230, 255, 181);
+  }
+}
 .closeButton, #optionButton, #optionsCollapseButton {
   border: none;
   color: rgb(204, 255, 103);
@@ -419,6 +435,7 @@ fieldset.options legend {
 #output > div > div {
   display: block;
   padding: 2rem;
+  max-width: calc(100% - 25rem);
 }
 #output > div > div:nth-of-type(2) {
   min-width: 25rem;
@@ -541,11 +558,14 @@ textarea::-webkit-scrollbar {
     height: 30vh;
   }
 
-  #output div {
+  #output > div {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+  }
+  #output > div > div {
+    max-width: 100%;
   }
 
   button {
