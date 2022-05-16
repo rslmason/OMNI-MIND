@@ -242,13 +242,13 @@ button {
   padding: 0.5rem;
 }
 
-button:hover, input:hover, input:focus, textarea:focus, select:hover {
+button:hover, button:focus, input:hover, input:focus, textarea:hover, textarea:focus, select:focus, select:hover {
   color: rgb(230, 255, 181);
   text-shadow: 1px 0px rgb(204, 255, 103), -1px 0px rgb(204, 255, 103);
   outline: 1px rgb(204, 255, 103) solid;
   border: 1px rgb(230, 255, 181) solid;
 }
-button:hover.wait, input:hover.wait, input:focus.wait, textarea:focus.wait, select:hover.wait {
+button:hover.wait, button:focus.wait, input:hover.wait, input:focus.wait, textarea:hover.wait, textarea:focus.wait, select:focus.wait, select:hover.wait {
   outline: 1px rgb(1, 107, 1) solid;
   border: 1px rgb(204, 255, 103) solid;
   color: rgb(204, 255, 103);

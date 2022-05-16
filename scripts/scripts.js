@@ -2,8 +2,12 @@
 // for (let i = 0; i < 2000; i++) {
 //     localStorage.removeItem(String(i));
 // }
+const newButton = document.getElementById('createNewButton');
+const suggestButton = document.getElementById('suggestButton');
+buttons = [newButton, suggestButton];
+disableButtons(true);
 
-document.getElementById('createNewButton').disabled = true; // If you just disable this in the HTML, it won't necessarily be disabled on page reload.
+
 const textArea = document.querySelector('textarea');
 const output = document.getElementById('output');
 
@@ -21,7 +25,7 @@ function deobfuscator (strOne, strTwo) {
 // Form/page functionality ------
 
 document.querySelectorAll('input').forEach(el=> el.addEventListener('keydown', (event)=>{
-    if (!event.key.match(/[0-9\.\-]/g) && (!event.key.startsWith('Arrow') && (!event.key.startsWith('Backs') && !event.key.startsWith('Del')))) {
+    if (!event.key.match(/[0-9\.\-]/g) && (!event.key.startsWith('Arrow') && (!event.key.startsWith('Backs') && !event.key.startsWith('Del') && !event.key.startsWith('Tab')))) {
         event.preventDefault()
     }
 }));
@@ -101,26 +105,34 @@ const requireStrings = ['text'];
 const excludeStrings = ['search','code','similarity','edit','insert'];
 
 getEngines().then(r => {
-    let j = 1;
     r.data.forEach(i => {
         const name = i.id;
         if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
             const option = document.createElement("option");
             option.value = i.id;
-            option.text = `${j++}. ${i.id.toUpperCase()}`.padEnd(19, ' ');
+            option.text = i.id.toUpperCase();
             document.getElementById('engine').appendChild(option);
         }
     });
-    document.getElementById('createNewButton').disabled = false;
+    disableButtons(false);
     }
-)
-// const option = document.createElement("option");
-// option.value = 'text-curie-001';
-// option.text = 'text-curie-001';
-// engineSelect.appendChild(option);
-// document.getElementById('createNewButton').disabled = false;
+).catch((error) => {
+    const option = document.createElement("option");
+    option.value = 'text-curie-001';
+    option.text = 'text-curie-001';
+    document.getElementById('engine').appendChild(option);
+    disableButtons(false);
+    console.log(error);
+})
 
-document.getElementById('createNewButton').addEventListener('click', function (Prompt) {
+function disableButtons (bool) {
+    for (button of buttons) {
+        button.disabled = bool;
+        bool ? button.classList.add('wait') : button.classList.remove('wait');
+    }
+}
+
+newButton.addEventListener('click', function (Prompt) {
     return (event) => {
         const newPrompt = new Prompt;
         newPrompt.makeHome();
@@ -129,7 +141,7 @@ document.getElementById('createNewButton').addEventListener('click', function (P
     }(Prompt)
 );
 
-document.getElementById('suggestButton').addEventListener('click', function (Prompt) {
+suggestButton.addEventListener('click', function (Prompt) {
     return (event) => {
         textArea.value = "Suggest an AI prompt."
         const newPrompt = new Prompt;
@@ -162,27 +174,34 @@ function Prompt ({params, engine, text, index} = {}) {
 
 const promptPrototype = {
     async getText () {
-        const response = await fetch(
-            `https://api.openai.com/v1/engines/${this.engine}/completions`,
-            {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${apiKey}`,
-                },
-                body: JSON.stringify(this.params),
-            }
-        );
-        const json = await response.json();
-        this.text = json.choices[0].text.trim();
+        try {
+            const response = await fetch(
+                `https://api.openai.com/v1/engines/${this.engine}/completions`,
+                {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${apiKey}`,
+                    },
+                    body: JSON.stringify(this.params),
+                }
+            );
+            console.log(response.ok);
+            const json = await response.json();
+            this.text = json.choices[0].text.trim();
+        }
+        catch {
+            this.text = "[Error:Unable to process.]"
+        }
         return this.text;
+
     },
 
     async write () {
         this.hold(true);
         t = String(await this.getText());
         if (this.location.tagName == "TEXTAREA") {
-            this.location.value = t;
+            this.location.value = t.replace(/\n/, '');
         }
         else {
             this.location.textContent = t;
@@ -252,16 +271,9 @@ const promptPrototype = {
 
     makeHome () {
         const dContainer = document.createElement('div');
-            const bClose = document.createElement('button');
-                bClose.textContent = 'X';
-                bClose.classList.add('closeButton');
-                bClose.addEventListener('click', ()=>{
-                    dContainer.remove();
-                    this.unStore();
-                })
             const dTextContainer = document.createElement('div');
                 const pPrompt = document.createElement('p');
-                    pPrompt.append(this.params.prompt || 'no prompt provided')
+                    pPrompt.append(this.params.prompt || '[no prompt provided]')
                 const pResponse = document.createElement('p');
                     pResponse.append(this.text);
                     this.location = pResponse;
@@ -279,7 +291,15 @@ const promptPrototype = {
                             pParams.append(document.createElement('br'), `${property.match(/(^[a-z])|(_[a-z])/g).join('').padStart(3, ' ')}: ${String(this.params[property]).padStart(4, ' ')}`);
                         };
             dInfoContainer.append(pParams);
-        dContainer.append(bClose, dTextContainer, dInfoContainer);
+            const bClose = document.createElement('button');
+                bClose.textContent = 'X';
+                bClose.classList.add('closeButton');
+                bClose.ariaLabel = "Remove this prompt";
+                bClose.addEventListener('click', ()=>{
+                    dContainer.remove();
+                    this.unStore();
+                })
+        dContainer.append(dTextContainer, dInfoContainer, bClose);
         output.append(dContainer);
     }
 }

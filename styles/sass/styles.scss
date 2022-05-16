@@ -48,7 +48,7 @@ button {
     padding: .5rem;
 }
 
-button:hover, input:hover, input:focus, textarea:focus, select:hover {
+button:hover, button:focus, input:hover, input:focus, textarea:hover, textarea:focus, select:focus, select:hover {
     @include highlightText;
     @include highlightBorder;
     &.wait {
@@ -70,7 +70,7 @@ button:hover, input:hover, input:focus, textarea:focus, select:hover {
     &:hover {
         border: none;
         outline: none;
-        @include highlightText();
+        @include highlightText;
     }
 }
 
