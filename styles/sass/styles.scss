@@ -83,7 +83,7 @@ p.wait, textarea.wait {
     border: none;
     @include normalText;
     outline: none;
-    &:hover {
+    &:hover, &:focus {
         border: none;
         outline: none;
         @include highlightText;
