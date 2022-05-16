@@ -262,19 +262,20 @@ button:hover.wait, button:focus.wait, input:hover.wait, input:focus.wait, textar
 }
 
 p.wait, textarea.wait {
+  color: rgb(230, 255, 181);
   -webkit-animation: blinker 1s cubic-bezier(1, -0.04, 0, 1.06) infinite;
           animation: blinker 1s cubic-bezier(1, -0.04, 0, 1.06) infinite;
 }
 
 @-webkit-keyframes blinker {
   0% {
-    color: rgb(230, 255, 181);
+    color: rgb(1, 107, 1);
   }
 }
 
 @keyframes blinker {
   0% {
-    color: rgb(230, 255, 181);
+    color: rgb(1, 107, 1);
   }
 }
 .closeButton, #optionButton, #optionsCollapseButton {

@@ -62,16 +62,17 @@ button:hover, button:focus, input:hover, input:focus, textarea:hover, textarea:f
     cursor: progress;
     color: $darkFontColor;
 }
-p.wait, textarea.wait {
 
+p.wait, textarea.wait {
+    color: $highlightFontColor;
     animation: blinker 1s cubic-bezier(1,-0.04,0,1.06) infinite;
 }
 
-    @keyframes blinker {
-        0% {
-          color: $highlightFontColor;
-        }
+@keyframes blinker {
+    0% {
+        color: $darkFontColor;
     }
+}
 
     // @keyframes blinker {
     //     from {color: $darkFontColor;}
