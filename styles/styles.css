@@ -308,12 +308,12 @@ p.wait, textarea.wait {
 
 ::-moz-selection {
   color: black;
-  background-color: rgb(204, 255, 103);
+  background-color: rgba(204, 255, 103, 0.8);
 }
 
 ::selection {
   color: black;
-  background-color: rgb(204, 255, 103);
+  background-color: rgba(204, 255, 103, 0.8);
 }
 
 #mask {
@@ -444,6 +444,7 @@ fieldset.options legend {
 }
 
 #optionPanel {
+  text-transform: none;
   display: block;
   position: absolute;
   top: 0;
@@ -469,6 +470,12 @@ fieldset.options legend {
 legend {
   margin-bottom: 1rem;
   text-decoration: underline;
+}
+legend button:first-child {
+  margin-right: 1rem;
+}
+legend button:last-child {
+  margin-left: 1rem;
 }
 
 label, input, select {
