@@ -8,8 +8,10 @@ disableButtons(true);
 const textArea = document.querySelector('textarea');
 const output = document.getElementById('output');
 const engineSelect = document.getElementById('engine');
+
 const maskString = 'Open the pod bay doors, Hal.';
 const apiKey = deobfuscator(maskedKey, maskString);
+
 function deobfuscator (strOne, strTwo) {
     let strArray = [];
     for (let i = 0; i < strOne.length; i++) {
@@ -158,7 +160,7 @@ function Prompt ({params, engine, text, index} = {}) {
     }
     else {
         this.params = {
-            prompt:             String(document.getElementById('prompt').value), // why do I need String() here?
+            prompt:             String(document.getElementById('prompt').value), 
             temperature:        parseFloat(document.getElementById('temperature').value),
             max_tokens:         parseInt(document.getElementById('max_tokens').value),
             top_p:              parseFloat(document.getElementById('top_p').value),
@@ -189,10 +191,9 @@ const promptPrototype = {
             this.text = json.choices[0].text.trim();
         }
         catch {
-            this.text = "[Error:Unable to process.]"
+            this.text = "[Error: Unable to process.]"
         }
         return this.text;
-
     },
 
     async write () {
@@ -231,7 +232,6 @@ const promptPrototype = {
                 index: this.index
             })
         );
-        // indexArray.push(this.index);
         if (!indexArray.includes(this.index)) {
             indexArray.push(this.index);
             localStorage.setItem(
