@@ -7,7 +7,7 @@ disableButtons(true);
 
 const textArea = document.querySelector('textarea');
 const output = document.getElementById('output');
-
+const engineSelect = document.getElementById('engine');
 const maskString = 'Open the pod bay doors, Hal.';
 const apiKey = deobfuscator(maskedKey, maskString);
 function deobfuscator (strOne, strTwo) {
@@ -108,17 +108,20 @@ getEngines().then(r => {
             const option = document.createElement("option");
             option.value = i.id;
             option.text = i.id.toUpperCase();
-            document.getElementById('engine').appendChild(option);
+            engineSelect.appendChild(option);
         }
     });
+    engineSelect.lastChild.selected = true;
     disableButtons(false);
     }
 ).catch((error) => {
-    const option = document.createElement("option");
-    option.value = 'text-curie-001';
-    option.text = 'text-curie-001';
-    document.getElementById('engine').appendChild(option);
-    disableButtons(false);
+    if (engineSelect.children.length == 0) {
+        const option = document.createElement("option");
+        option.value = 'text-curie-001';
+        option.text = 'TEXT-CURIE-001';
+        engineSelect.appendChild(option);
+        disableButtons(false);
+    }
 })
 
 function disableButtons (bool) {
@@ -162,7 +165,7 @@ function Prompt ({params, engine, text, index} = {}) {
             frequency_penalty:  parseFloat(document.getElementById('frequency_penalty').value),
             presence_penalty:   parseFloat(document.getElementById('presence_penalty').value),
         };
-        this.engine = document.getElementById('engine').value;
+        this.engine = engineSelect.value;
         this.text = '...';
         this.index = indexCounter++;
     }
