@@ -85,7 +85,7 @@ document.querySelector('.closeButton').addEventListener('click', (event)=> {
     document.getElementById('mask').classList.remove('show');
 });
 
-// App Setup ------
+// App Functionality ------
 
 async function getEngines() {
     const response = await fetch ('https://api.openai.com/v1/engines',
