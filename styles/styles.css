@@ -261,7 +261,7 @@ button:hover.wait, button:focus.wait, input:hover.wait, input:focus.wait, textar
   color: rgb(1, 107, 1);
 }
 
-p.wait, textarea.wait {
+p.wait, textarea.wait, textarea.wait:hover {
   color: rgb(230, 255, 181);
   -webkit-animation: blinker 1s cubic-bezier(1, -0.04, 0, 1.06) infinite;
           animation: blinker 1s cubic-bezier(1, -0.04, 0, 1.06) infinite;
@@ -531,12 +531,10 @@ textarea::-webkit-scrollbar {
   html {
     font-size: 56%;
   }
-
   .wrapper {
     max-width: none;
     width: 95%;
   }
-
   form {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -561,11 +559,9 @@ textarea::-webkit-scrollbar {
   form fieldset.options #optionPanel {
     width: 100%;
   }
-
   textarea {
     height: 30vh;
   }
-
   #output > div {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -575,16 +571,13 @@ textarea::-webkit-scrollbar {
   #output > div > div {
     max-width: 100%;
   }
-
   button {
     padding: 1rem;
     margin-bottom: 1rem;
   }
-
   #optionsCollapseButton {
     visibility: visible;
   }
-
   label, input, select {
     width: 100%;
     visibility: hidden;
@@ -594,7 +587,6 @@ textarea::-webkit-scrollbar {
     visibility: visible;
     position: relative;
   }
-
   label {
     height: 4.4rem;
   }

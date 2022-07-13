@@ -63,7 +63,7 @@ button:hover, button:focus, input:hover, input:focus, textarea:hover, textarea:f
     color: $darkFontColor;
 }
 
-p.wait, textarea.wait {
+p.wait, textarea.wait, textarea.wait:hover {
     color: $highlightFontColor;
     animation: blinker 1s cubic-bezier(1,-0.04,0,1.06) infinite;
 }
