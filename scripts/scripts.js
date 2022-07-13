@@ -6,6 +6,7 @@ disableButtons(true);
 
 
 const textArea = document.querySelector('textarea');
+textArea.focus();
 const output = document.getElementById('output');
 const engineSelect = document.getElementById('engine');
 
