@@ -98,10 +98,15 @@ async function getEngines() {
     //         }
     //     }
     // )
-    const response = await fetch (
-        '/.netlify/functions/get_engines',
-    )
-    return response.json();
+    try {
+        const response = await fetch (
+            '/.netlify/functions/get_engines',
+        )
+        return response.json();
+    } 
+    catch (e) {
+        console.error (e)
+    }
 }
 
 const requireStrings = ['text'];
