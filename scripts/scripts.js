@@ -196,12 +196,13 @@ const promptPrototype = {
         // }
         try {
             const response = await fetch(
-                '/.netlify/functions/call'
+                '/.netlify/functions/machine_mind',
+                JSON.stringify(this.params)
             )
             this.text = await response.text();
         } 
         catch {
-            this.text = "asplode";
+            this.text = "[ Error: The programmer who created my mind is an idiot ]";
         }
         return this.text;
     },
