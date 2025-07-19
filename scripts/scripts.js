@@ -176,23 +176,32 @@ function Prompt ({params, engine, text, index} = {}) {
 
 const promptPrototype = {
     async getText () {
+        // try {
+        //     const response = await fetch(
+        //         `https://api.openai.com/v1/engines/${this.engine}/completions`,
+        //         {
+        //             method: 'POST',
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //                 Authorization: `Bearer ${apiKey}`,
+        //             },
+        //             body: JSON.stringify(this.params),
+        //         }
+        //     );
+        //     const json = await response.json();
+        //     this.text = json.choices[0].text.trim();
+        // }
+        // catch {
+        //     this.text = "[Error: Unable to process.]"
+        // }
         try {
             const response = await fetch(
-                `https://api.openai.com/v1/engines/${this.engine}/completions`,
-                {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${apiKey}`,
-                    },
-                    body: JSON.stringify(this.params),
-                }
-            );
-            const json = await response.json();
-            this.text = json.choices[0].text.trim();
-        }
+                '/.netlify/functions/call'
+            )
+            this.text = response;
+        } 
         catch {
-            this.text = "[Error: Unable to process.]"
+            this.text = "asplode";
         }
         return this.text;
     },
