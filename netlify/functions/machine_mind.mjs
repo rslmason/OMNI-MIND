@@ -1,5 +1,5 @@
 export default async function (req, context) {
-  const $OPEN_AI_API_KEY = Netlify.env.get("OPEN_AI_API_KEY");
+  const OPEN_AI_API_KEY = Netlify.env.get("OPEN_AI_API_KEY");
   const params = JSON.parse(req.body);
   try {
     const response = await fetch (
@@ -8,7 +8,7 @@ export default async function (req, context) {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${$OPEN_AI_API_KEY}`,
+          Authorization: `Bearer ${OPEN_AI_API_KEY}`,
         },
         body: JSON.stringify(this.params),
       }
