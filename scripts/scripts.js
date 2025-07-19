@@ -91,12 +91,15 @@ document.querySelector('.closeButton').addEventListener('click', (event)=> {
 // App Functionality ------
 
 async function getEngines() {
-    const response = await fetch ('https://api.openai.com/v1/engines',
-        {
-            headers: {
-                Authorization: `Bearer ${apiKey}`,
-            }
-        }
+    // const response = await fetch ('https://api.openai.com/v1/engines',
+    //     {
+    //         headers: {
+    //             Authorization: `Bearer ${apiKey}`,
+    //         }
+    //     }
+    // )
+    const response = await fetch (
+        '/.netlify/functions/get_engines',
     )
     return response.json();
 }
