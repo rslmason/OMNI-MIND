@@ -209,8 +209,9 @@ const promptPrototype = {
             )
             this.text = await response.text();
         } 
-        catch {
+        catch (e) {
             this.text = "[ Error: The programmer who created my mind is an idiot ]";
+            console.log(e)
         }
         return this.text;
     },
