@@ -1,3 +1,3 @@
-export default sync function (req, context) {
+export default async function (req, context) {
   return new Response("Hellow Orld");
 }
