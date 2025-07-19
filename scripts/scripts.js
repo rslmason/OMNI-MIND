@@ -102,7 +102,7 @@ async function getEngines() {
         const response = await fetch (
             '/.netlify/functions/get_engines',
         )
-        return response.json();
+        return await response.json();
     } 
     catch (e) {
         console.error (e)
