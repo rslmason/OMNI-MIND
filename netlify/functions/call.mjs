@@ -1,3 +1,4 @@
 export default async function (req, context) {
-  return new Response("Hellow Orld");
+  const $foobarbaz = Netlify.env("FOOBARBAZ");
+  return new Response("Hellow Orld: " + $foobarbaz);
 }

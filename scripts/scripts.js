@@ -198,7 +198,7 @@ const promptPrototype = {
             const response = await fetch(
                 '/.netlify/functions/call'
             )
-            this.text = response;
+            this.text = await response.text();
         } 
         catch {
             this.text = "asplode";
