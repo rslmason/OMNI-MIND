@@ -294,7 +294,7 @@ const promptPrototype = {
             dTextContainer.append(pPrompt, pResponse, bRetry);
             const dInfoContainer = document.createElement('div');
                     const pParams = document.createElement('p');
-                    pParams.append(`engine:`, document.createElement('br'), this.engine);  
+                    pParams.append(`engine:`, document.createElement('br'), this.engine.substring(0,19));  
                         for (property of ['max_tokens', 'temperature', 'top_p', 'frequency_penalty', 'presence_penalty']) {
                             pParams.append(document.createElement('br'), `${property.match(/(^[a-z])|(_[a-z])/g).join('').padStart(3, ' ')}: ${String(this.params[property]).padStart(4, ' ')}`);
                         };
