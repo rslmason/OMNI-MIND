@@ -9,7 +9,7 @@ export default async function (req, context) {
         }
       }
     )
-    return new Response(response.text()); // Seems like it should not be necessary to do this.
+    return new Response(await response.text()); // Seems like it should not be necessary to do this.
   }
   catch {
     return new Response("failed to get engines")
