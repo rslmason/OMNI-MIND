@@ -90,65 +90,48 @@ document.querySelector('.closeButton').addEventListener('click', (event)=> {
 
 // App Functionality ------
 
-async function getEngines() {
-    // const response = await fetch ('https://api.openai.com/v1/engines',
-    //     {
-    //         headers: {
-    //             Authorization: `Bearer ${apiKey}`,
-    //         }
-    //     }
-    // )
-    try {
-        const response = await fetch (
-            '/.netlify/functions/get_engines',
-        )
-        return await response.json();
-    } 
-    catch (e) {
-        console.error (e)
-    }
-}
+// async function getEngines() {
+//     const response = await fetch ('https://api.openai.com/v1/engines',
+//         {
+//             headers: {
+//                 Authorization: `Bearer ${apiKey}`,
+//             }
+//         }
+//     )
+// }
 
-const requireStrings = [];
-const excludeStrings = [
-    'embedding',
-    'tts',
-    'moderation',
-    'realtime',
-    'dall-e',
-    'transcribe',
-    'preview',
-    'audio',
-    'o4',
-    'o3',
-    'o1',
-    'image',
-    'search',
-    'instruct',
-    'whisper',
-];
+// const requireStrings = [];
+// const excludeStrings = [];
+const engines = ['davinci-002', 'babbage-002']; 
 
-getEngines().then(r => {
-    r.data.forEach(i => {
-        const name = i.id;
-        if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
-            const option = document.createElement("option");
-            option.value = i.id;
-            option.text = i.id.toUpperCase();
-            engineSelect.appendChild(option);
-        }
-    });
-    engineSelect.lastChild.selected = true;
-    disableButtons(false);
-    }
-).catch((error) => {
-    if (engineSelect.children.length == 0) {
-        const option = document.createElement("option");
-        option.value = 'text-curie-001';
-        option.text = 'TEXT-CURIE-001';
-        engineSelect.appendChild(option);
-        disableButtons(false);
-    }
+// // deprecated--there are really just the two models now for v1/completions
+// getEngines().then(r => {
+//     r.data.forEach(i => {
+//         const name = i.id;
+//         if (requireStrings.every(str => name.includes(str)) && !excludeStrings.some(str => name.includes(str))) {
+//             const option = document.createElement("option");
+//             option.value = i.id;
+//             option.text = i.id.toUpperCase();
+//             engineSelect.appendChild(option);
+//         }
+//     });
+//     engineSelect.lastChild.selected = true;
+//     disableButtons(false);
+//     }
+// ).catch((error) => {
+//     if (engineSelect.children.length == 0) {
+//         const option = document.createElement("option");
+//         option.value = 'text-curie-001';
+//         option.text = 'TEXT-CURIE-001';
+//         engineSelect.appendChild(option);
+//         disableButtons(false);
+//     }
+// })
+engines.forEarch(engine => {
+    const option = document.createElement("option");
+    option.value = engine;
+    option.text = engine.toUppercase();
+    engineSelect.appendChild(option)
 })
 
 function disableButtons (bool) {
