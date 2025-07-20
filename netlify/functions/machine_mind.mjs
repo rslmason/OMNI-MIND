@@ -14,7 +14,11 @@ export default async function (req, context) {
       }
     );
     const json = await response.json();
-    return new Response(json.choices[0].text.trim());
+    if (json.choices?.[0]?.text) {
+      return new Response(json.choices[0].text.trim());
+    } else {
+      return JSON.stringify(json)
+    }
   }
   catch (e) {
     return new Response(e.toString());
