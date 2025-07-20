@@ -1,5 +1,6 @@
 export default async function (req, context) {
   const OPEN_AI_API_KEY = Netlify.env.get("OPEN_AI_API_KEY");
+  const params = await req.json();
   try {
     const response = await fetch (
       `https://api.openai.com/v1/engines/${params.engine}/completions`,
