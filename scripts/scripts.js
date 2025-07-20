@@ -205,8 +205,12 @@ const promptPrototype = {
         try {
             const response = await fetch(
                 '/.netlify/functions/machine_mind',
-                JSON.stringify(this.params)
-            )
+                { 
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(this.params)
+                }
+            );
             this.text = await response.text();
         } 
         catch (e) {
