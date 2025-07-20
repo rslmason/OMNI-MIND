@@ -110,7 +110,22 @@ async function getEngines() {
 }
 
 const requireStrings = [];
-const excludeStrings = ['embedding','tts','moderation','realtime','dall-e','transcribe','preview','audio','o4','o3','image','search'];
+const excludeStrings = [
+    'embedding',
+    'tts',
+    'moderation',
+    'realtime',
+    'dall-e',
+    'transcribe',
+    'preview',
+    'audio',
+    'o4',
+    'o3',
+    'o1',
+    'image',
+    'search',
+    'instruct',
+];
 
 getEngines().then(r => {
     r.data.forEach(i => {
