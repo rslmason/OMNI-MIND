@@ -13,13 +13,16 @@ export default async function (req, context) {
         body: JSON.stringify(this.params),
       }
     );
-    const json = await response.json();
-    return new Response(json.choices[0].text.trim());
+    try {
+      const json = await response.json();
+      return new Response(json.choices[0].text.trim());
+    }
+    catch {
+      return new Response("Error jsoning response: " + e.toString());
+    }
     // return new Response(req.body)
   }
   catch (e) {
-    return new Response(e.toString())
+    return new Response("a:" + e.toString())
   }
-
-  return fetch
 }
