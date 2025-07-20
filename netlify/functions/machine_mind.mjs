@@ -10,7 +10,7 @@ export default async function (req, context) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${OPEN_AI_API_KEY}`,
         },
-        body: await req.text()
+        body: JSON.stringify(params.openai_params),
       }
     );
     const json = await response.json();

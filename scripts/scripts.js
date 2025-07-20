@@ -208,7 +208,10 @@ const promptPrototype = {
                 { 
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(this.params)
+                    body: JSON.stringify({
+                        openai_params: this.params,
+                        engine: this.engine 
+                    })
                 }
             );
             this.text = await response.text();
