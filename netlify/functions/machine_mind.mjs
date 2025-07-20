@@ -13,6 +13,7 @@ export default async function (req, context) {
         body: JSON.stringify(params.openai_params),
       }
     );
+    return new Response(await response.text());
     const json = await response.json();
     return new Response(json.choices[0].text.trim());
   }
