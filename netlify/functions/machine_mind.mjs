@@ -17,8 +17,8 @@ export default async function (req, context) {
     return new Response(json.choices[0].text.trim());
     // return new Response(req.body)
   }
-  catch {
-    return new Response("[Error: My creator is an idiot ]")
+  catch (e) {
+    return new Response(e.toString())
   }
 
   return fetch
