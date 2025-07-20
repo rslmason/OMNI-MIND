@@ -130,7 +130,7 @@ const engines = ['davinci-002', 'babbage-002'];
 engines.forEach(engine => {
     const option = document.createElement("option");
     option.value = engine;
-    option.text = engine.toUppercase();
+    option.text = engine.toUpperCase();
     engineSelect.appendChild(option)
 })
 engineSelect.lastChild.selected = true;
