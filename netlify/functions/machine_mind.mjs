@@ -17,7 +17,7 @@ export default async function (req, context) {
     if (json.choices?.[0]?.text) {
       return new Response(json.choices[0].text.trim());
     } else {
-      return JSON.stringify(json)
+      return new Response(JSON.stringify(json));
     }
   }
   catch (e) {
