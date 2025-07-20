@@ -127,7 +127,7 @@ const engines = ['davinci-002', 'babbage-002'];
 //         disableButtons(false);
 //     }
 // })
-engines.forEarch(engine => {
+engines.forEach(engine => {
     const option = document.createElement("option");
     option.value = engine;
     option.text = engine.toUppercase();
