@@ -15,8 +15,8 @@ export default async function (req, context) {
     const json = await response.json();
     return new Response(json.choices[0].text.trim());
   }
-  catch {
-    return new Response("[ Error: Machine mind malfunction ]");
+  catch (e) {
+    return new Response(e.toString());
   }
 
 }
