@@ -125,6 +125,7 @@ const excludeStrings = [
     'image',
     'search',
     'instruct',
+    'whisper',
 ];
 
 getEngines().then(r => {
