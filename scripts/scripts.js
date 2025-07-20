@@ -133,6 +133,8 @@ engines.forEarch(engine => {
     option.text = engine.toUppercase();
     engineSelect.appendChild(option)
 })
+engineSelect.lastChild.selected = true;
+disableButtons(false);
 
 function disableButtons (bool) {
     for (button of buttons) {
