@@ -267,6 +267,10 @@ p.wait, textarea.wait, textarea.wait:hover {
           animation: blinker 1s cubic-bezier(1, -0.04, 0, 1.06) infinite;
 }
 
+hr {
+    border-color: rgb(1, 107, 1);
+}
+
 @-webkit-keyframes blinker {
   0% {
     color: rgb(1, 107, 1);

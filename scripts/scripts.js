@@ -314,7 +314,8 @@ const promptPrototype = {
         const dContainer = document.createElement('div');
             const dTextContainer = document.createElement('div');
                 const pPrompt = document.createElement('p');
-                    pPrompt.append(this.params.prompt || '[no prompt provided]')
+                    pPrompt.append(this.params.prompt || '[no prompt provided]');
+                const hr = document.createElement('hr');
                 const pResponse = document.createElement('p');
                     pResponse.append(this.text);
                     this.location = pResponse;
@@ -324,7 +325,7 @@ const promptPrototype = {
                         this.writeStore();
                     })
                 this.assocElements = [pResponse, bRetry];
-            dTextContainer.append(pPrompt, pResponse, bRetry);
+            dTextContainer.append(pPrompt, hr, pResponse, bRetry);
             const dInfoContainer = document.createElement('div');
                     const pParams = document.createElement('p');
                     pParams.append(`engine:`, document.createElement('br'), this.engine.substring(0,19));  
