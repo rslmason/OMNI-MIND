@@ -102,7 +102,7 @@ document.querySelector('.closeButton').addEventListener('click', (event)=> {
 
 // const requireStrings = [];
 // const excludeStrings = [];
-const engines = ['davinci-002', 'babbage-002']; 
+const engines = ['babbage-002', 'davinci-002']; 
 
 // // deprecated--there are really just the two models now for v1/completions
 // getEngines().then(r => {
